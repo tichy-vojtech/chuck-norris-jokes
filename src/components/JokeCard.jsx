@@ -5,15 +5,15 @@ const JokeCard = ({ imageSrc, theJoke }) => {
   return (
     <div>
       <Center>
-        <Card maxW='sm'>
+        <Card maxW='sm' borderRadius="lg">
           <CardBody>
-            {/* <Image
+            <Image
               src={imageSrc}
               alt='Chuck Norris'
               borderRadius='lg'
               boxSize='200px'
               objectFit='cover'
-            /> */}
+            />
             <Stack mt='6' spacing='3'>
               <Heading size='xs'>{theJoke}</Heading>
             </Stack>

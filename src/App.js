@@ -3,6 +3,7 @@ import axios from "axios";
 import JokeCard from './components/JokeCard';
 import { useEffect, useState } from 'react';
 import { Button } from '@chakra-ui/react';
+import Navbar from "./components/Navbar";
 
 function App() {
 
@@ -28,8 +29,10 @@ console.log(joke)
 
   return (
     <div className="App">
+      <Navbar />
       <Button
        colorScheme='blue' size='lg'
+       my={2}
        onClick={getJokes}
       >
         Get new Joke
