@@ -18,12 +18,12 @@ import {
 } from '@chakra-ui/react';
 import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
 
-function Navbar() {
+function AppHeader() {
   const { colorMode, toggleColorMode } = useColorMode();
   // const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg={useColorModeValue('blue.100', 'blue.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Heading p={2} py={4}>CN Jokes</Heading>
 
@@ -72,4 +72,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default AppHeader;
