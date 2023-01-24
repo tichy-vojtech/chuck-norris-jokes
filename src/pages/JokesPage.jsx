@@ -1,13 +1,13 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import JokeCard from "../components/JokeCard";
-import { getJokes } from "../hooks/useFetchRandomJoke";
+import { getJoke } from "../API/getJoke";
 
 export function JokesPage() {
   const [joke, setJoke] = useState([]);
 
   useEffect(() => {
-    getJokes().then((data) => setJoke(data));
+    getJoke().then((data) => setJoke(data));
   }, []);
 
   return (
@@ -18,7 +18,7 @@ export function JokesPage() {
           size="lg"
           my={2}
           onClick={() => {
-            getJokes().then((data) => setJoke(data));
+            getJoke().then((data) => setJoke(data));
           }}
         >
           Get new Joke
