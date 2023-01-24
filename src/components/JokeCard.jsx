@@ -3,10 +3,10 @@ import {
   Card,
   CardBody,
   Image,
-  Stack,
   Heading,
-  Divider,
-  Center,
+  HStack,
+  Text,
+  Textarea,
 } from "@chakra-ui/react";
 import chuck1 from "../assets/chuck1.jpeg";
 import chuck2 from "../assets/chuck2.jpeg";
@@ -19,7 +19,7 @@ import chuck8 from "../assets/chuck8.jpeg";
 import chuck9 from "../assets/chuck9.jpeg";
 import chuck10 from "../assets/chuck10.jpeg";
 
-const JokeCard = ({ imageSrc, theJoke }) => {
+const JokeCard = ({ imageSrc, theJoke, category }) => {
   const images = [
     chuck1,
     chuck2,
@@ -37,27 +37,25 @@ const JokeCard = ({ imageSrc, theJoke }) => {
   let randomImage = images[Math.floor(Math.random() * images.length)];
 
   return (
-    <div>
-      <Center>
-        <Card maxW="sm" borderRadius="lg">
-          <CardBody>
-            <Center>
-              <Image
-                src={randomImage}
-                alt="Chuck Norris"
-                borderRadius="lg"
-                boxSize="200px"
-                objectFit="cover"
-              />
-            </Center>
-            <Stack mt="6" spacing="3">
-              <Heading size="xs">{theJoke}</Heading>
-            </Stack>
-          </CardBody>
-          <Divider />
-        </Card>
-      </Center>
-    </div>
+    <Card maxW="sm" borderRadius="lg">
+      <CardBody>
+        <HStack>
+          <Image
+            src={randomImage}
+            alt="Chuck Norris"
+            borderRadius="lg"
+            boxSize="150px"
+            objectFit="cover"
+          />
+          <Heading size="xs">{theJoke}</Heading>
+        </HStack>
+        {category.length !== 0 && (
+          <Text mt="2">
+            Category: <b>{category}</b>
+          </Text>
+        )}
+      </CardBody>
+    </Card>
   );
 };
 

@@ -9,7 +9,6 @@ export function JokesPage() {
   useEffect(() => {
     getJokes().then((data) => setJoke(data));
   }, []);
-
   return (
     <Box px={5}>
       <VStack>
@@ -23,7 +22,11 @@ export function JokesPage() {
         >
           Get new Joke
         </Button>
-        <JokeCard imageSrc={joke.icon_url} theJoke={joke.value} />
+        <JokeCard
+          imageSrc={joke.icon_url}
+          theJoke={joke.value}
+          category={joke.categories}
+        />
       </VStack>
     </Box>
   );
