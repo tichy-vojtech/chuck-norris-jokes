@@ -8,7 +8,7 @@ import {
   MenuDivider,
   Heading,
 } from "@chakra-ui/react";
-import { getCategories } from "../API/getCategories";
+import { getCategories } from "../api/getCategories";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 

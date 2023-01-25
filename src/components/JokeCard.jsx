@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardBody,
@@ -6,36 +6,17 @@ import {
   Heading,
   HStack,
   Text,
+  Button,
+  Spacer,
+  Tooltip,
   Textarea,
+  VStack,
 } from "@chakra-ui/react";
-import chuck1 from "../assets/chuck1.jpeg";
-import chuck2 from "../assets/chuck2.jpeg";
-import chuck3 from "../assets/chuck3.jpeg";
-import chuck4 from "../assets/chuck4.jpeg";
-import chuck5 from "../assets/chuck5.jpeg";
-import chuck6 from "../assets/chuck6.jpeg";
-import chuck7 from "../assets/chuck7.jpeg";
-import chuck8 from "../assets/chuck8.jpeg";
-import chuck9 from "../assets/chuck9.jpeg";
-import chuck10 from "../assets/chuck10.jpeg";
+import { FaStar } from "react-icons/fa";
 
-const JokeCard = ({ imageSrc, theJoke, category }) => {
-  const images = [
-    chuck1,
-    chuck2,
-    chuck3,
-    chuck4,
-    chuck5,
-    chuck5,
-    chuck6,
-    chuck7,
-    chuck8,
-    chuck9,
-    chuck10,
-  ];
-
-  let randomImage = images[Math.floor(Math.random() * images.length)];
-
+const JokeCard = ({ imageSrc, theJoke, category, randomImage }) => {
+  const [showMore, setShowMore] = useState(false);
+  const maxCardWidth = 200;
   return (
     <Card maxW="sm" borderRadius="lg">
       <CardBody>
@@ -47,13 +28,41 @@ const JokeCard = ({ imageSrc, theJoke, category }) => {
             boxSize="150px"
             objectFit="cover"
           />
-          <Heading size="xs">{theJoke}</Heading>
+
+          {theJoke?.length > maxCardWidth ? (
+            <VStack>
+              <Heading size="xs">
+                {showMore ? theJoke : `${theJoke?.substring(0, maxCardWidth)}`}
+              </Heading>
+              <Button
+                variant="ghost"
+                color="blue"
+                size="xs"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore ? "Show less" : "Show more"}
+              </Button>
+            </VStack>
+          ) : (
+            <Heading size="xs">{theJoke}</Heading>
+          )}
         </HStack>
-        {category.length !== 0 && (
-          <Text mt="2">
-            Category: <b>{category}</b>
-          </Text>
-        )}
+
+        <HStack>
+          {category?.length && (
+            <Text mt="2">
+              Category: <b>{category}</b>
+            </Text>
+          )}
+          <Spacer />
+          <Tooltip label="Is this joke awesome? You can save it ...">
+            <Button variant="ghost">
+              <Text color="orange.300">
+                <FaStar />
+              </Text>
+            </Button>
+          </Tooltip>
+        </HStack>
       </CardBody>
     </Card>
   );
