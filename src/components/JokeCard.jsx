@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardBody,
@@ -9,12 +9,11 @@ import {
   Button,
   Spacer,
   Tooltip,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { FaStar } from "react-icons/fa";
 
-const JokeCard = ({ imageSrc, theJoke, category, randomImage }) => {
+const JokeCard = ({ theJoke, category, randomImage }) => {
   const [showMore, setShowMore] = useState(false);
   const maxCardWidth = 200;
   return (
