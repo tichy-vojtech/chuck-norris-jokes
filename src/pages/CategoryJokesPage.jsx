@@ -1,11 +1,8 @@
-import { VStack, Button, Box } from "@chakra-ui/react";
+import { VStack, Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import JokeCard from "../components/JokeCard";
 import { getJoke } from "../api/getJoke";
-import Loader from "../components/Loader";
-import Error from "../components/Error";
-import SearchInput from "../components/SearchInput";
-
+import { useParams } from "react-router-dom";
 import chuck1 from "../assets/chuck1.jpeg";
 import chuck2 from "../assets/chuck2.jpeg";
 import chuck3 from "../assets/chuck3.jpeg";
@@ -16,46 +13,45 @@ import chuck7 from "../assets/chuck7.jpeg";
 import chuck8 from "../assets/chuck8.jpeg";
 import chuck9 from "../assets/chuck9.jpeg";
 import chuck10 from "../assets/chuck10.jpeg";
+import SearchInput from "../components/SearchInput";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
 
-export function JokesPage() {
-  const images = [
-    chuck1,
-    chuck2,
-    chuck3,
-    chuck4,
-    chuck5,
-    chuck5,
-    chuck6,
-    chuck7,
-    chuck8,
-    chuck9,
-    chuck10,
-  ];
+const images = [
+  chuck1,
+  chuck2,
+  chuck3,
+  chuck4,
+  chuck5,
+  chuck5,
+  chuck6,
+  chuck7,
+  chuck8,
+  chuck9,
+  chuck10,
+];
 
-  const INITIAL_STATE = {
-    data: [],
-    isLoading: false,
-    isError: false,
-  };
+const INITIAL_STATE = {
+  data: [],
+  isLoading: false,
+  isError: false,
+};
 
+export default function CategoryJokesPage() {
+  const { category } = useParams();
   const [jokes, setJokes] = useState(INITIAL_STATE);
   const [randomJokes, setRandomJokes] = useState([]);
-  const [previousJokes, setPreviousJokes] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   function generateRandomJokes(jokes) {
-    let randomJokesTemp = [];
-    for (let i = 0; i < 20; i++) {
-      let randomJoke = jokes.result[Math.floor(Math.random() * jokes.total)];
-      if (!previousJokes.has(randomJoke.id)) {
-        randomJokesTemp.push(randomJoke);
-        previousJokes.add(randomJoke.id);
-      }
-    }
-    setPreviousJokes(previousJokes);
-    setRandomJokes(randomJokesTemp);
+    console.log(jokes);
+    const categoryJokes = jokes.result.filter(
+      (joke) => joke.categories[0] === category
+    );
+
+    setRandomJokes(categoryJokes);
   }
 
   useEffect(() => {
@@ -63,23 +59,20 @@ export function JokesPage() {
     setError(null);
     getJoke()
       .then((data) => {
-        setJokes(data);
+        setJokes({ data, isLoading: false, isError: false });
         generateRandomJokes(data);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
 
-  function handleClick() {
-    setIsLoading(true);
-    setError(null);
-    generateRandomJokes(jokes);
-    setIsLoading(false);
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
+
   return (
     <Box px={5}>
       <VStack>
@@ -89,10 +82,6 @@ export function JokesPage() {
             setSearchTerm(value);
           }}
         />
-
-        <Button colorScheme="blue" size="lg" my={2} onClick={handleClick}>
-          Get new Joke
-        </Button>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">

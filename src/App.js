@@ -5,6 +5,7 @@ import { AppLayout } from "./components/AppLayout";
 import { JokesPage } from "./pages/JokesPage";
 import FavoriteJokesPage from "./pages/FavoriteJokesPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import CategoryJokesPage from "./pages/CategoryJokesPage";
 
 function App() {
   return (
@@ -15,6 +16,10 @@ function App() {
             <Route path="/" element={<JokesPage />} />
             <Route path="/FavoriteJokes" element={<FavoriteJokesPage />} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route
+              path="/category-jokes/:category"
+              element={<CategoryJokesPage />}
+            />
           </Routes>
         </AppLayout>
       </BrowserRouter>
