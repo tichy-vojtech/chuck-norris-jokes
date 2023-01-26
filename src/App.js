@@ -11,7 +11,6 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <AppLayout>
-          {/* <Sidebar /> */}
           <Routes>
             <Route path="/" element={<JokesPage />} />
             <Route path="/FavoriteJokes" element={<FavoriteJokesPage />} />

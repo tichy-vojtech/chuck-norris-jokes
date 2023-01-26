@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import Error from "../components/Error";
 import SearchInput from "../components/SearchInput";
 
+
 import chuck1 from "../assets/chuck1.jpeg";
 import chuck2 from "../assets/chuck2.jpeg";
 import chuck3 from "../assets/chuck3.jpeg";
@@ -16,6 +17,7 @@ import chuck7 from "../assets/chuck7.jpeg";
 import chuck8 from "../assets/chuck8.jpeg";
 import chuck9 from "../assets/chuck9.jpeg";
 import chuck10 from "../assets/chuck10.jpeg";
+import SearchInput from "../components/SearchInput";
 
 export function JokesPage() {
   const images = [
@@ -32,12 +34,19 @@ export function JokesPage() {
     chuck10,
   ];
 
-  const [jokes, setJokes] = useState(null);
+  const INITIAL_STATE = {
+    data: [],
+    isLoading: false,
+    isError: false,
+  };
+
+  const [jokes, setJokes] = useState(INITIAL_STATE);
   const [randomJokes, setRandomJokes] = useState([]);
   const [previousJokes, setPreviousJokes] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
 
   function generateRandomJokes(jokes) {
     let randomJokesTemp = [];
@@ -84,6 +93,7 @@ export function JokesPage() {
           }}
         />
 
+
         <Button colorScheme="blue" size="lg" my={2} onClick={handleClick}>
           Get new Joke
         </Button>
@@ -119,6 +129,7 @@ export function JokesPage() {
                     }
                   />
                 ))}
+
         </Box>
       </VStack>
     </Box>
