@@ -4,7 +4,7 @@ import "./App.css";
 import { AppLayout } from "./components/AppLayout";
 import { JokesPage } from "./pages/JokesPage";
 import FavoriteJokesPage from "./pages/FavoriteJokesPage";
-// import Sidebar from './components/Sidebar';
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<JokesPage />} />
             <Route path="/FavoriteJokes" element={<FavoriteJokesPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </AppLayout>
       </BrowserRouter>

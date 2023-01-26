@@ -2,6 +2,9 @@ import { VStack, Button, Box } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import JokeCard from "../components/JokeCard";
 import { getJoke } from "../api/getJoke";
+import Loader from "../components/Loader";
+import Error from "../components/Error";
+import SearchInput from "../components/SearchInput";
 
 import chuck1 from "../assets/chuck1.jpeg";
 import chuck2 from "../assets/chuck2.jpeg";
@@ -32,8 +35,11 @@ export function JokesPage() {
   const [jokes, setJokes] = useState(null);
   const [randomJokes, setRandomJokes] = useState([]);
   const [previousJokes, setPreviousJokes] = useState(new Set());
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  function fetchRandomJokes(jokes) {
+  function generateRandomJokes(jokes) {
     let randomJokesTemp = [];
     for (let i = 0; i < 20; i++) {
       let randomJoke = jokes.result[Math.floor(Math.random() * jokes.total)];
@@ -43,37 +49,77 @@ export function JokesPage() {
       }
     }
     setPreviousJokes(previousJokes);
-    return randomJokesTemp;
+    setRandomJokes(randomJokesTemp);
   }
 
   useEffect(() => {
-    getJoke().then((data) => {
-      setJokes(data);
-      setRandomJokes(fetchRandomJokes(data));
-    });
+    setIsLoading(true);
+    setError(null);
+    getJoke()
+      .then((data) => {
+        setJokes(data);
+        generateRandomJokes(data);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   function handleClick() {
-    setRandomJokes(fetchRandomJokes(jokes));
+    setIsLoading(true);
+    setError(null);
+    generateRandomJokes(jokes);
+    setIsLoading(false);
   }
-
   return (
     <Box px={5}>
       <VStack>
+        <SearchInput
+          placeholderText="Search for jokes"
+          onChange={(value) => {
+            setSearchTerm(value);
+          }}
+        />
+
         <Button colorScheme="blue" size="lg" my={2} onClick={handleClick}>
           Get new Joke
         </Button>
+        {isLoading && <Loader />}
+        {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
-          {randomJokes?.map((joke) => (
-            <JokeCard
-              key={joke.id}
-              theJoke={joke.value}
-              category={joke.categories}
-              randomImage={images[Math.floor(Math.random() * images.length)]}
-            />
-          ))}
+          {searchTerm === ""
+            ? randomJokes.map((joke) => (
+                <JokeCard
+                  key={joke.id}
+                  theJoke={joke.value}
+                  category={joke.categories}
+                  randomImage={
+                    images[Math.floor(Math.random() * images.length)]
+                  }
+                />
+              ))
+            : jokes.result
+                ?.filter(
+                  (joke) =>
+                    joke.value
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase()) || searchTerm === ""
+                )
+                .slice(0, 25)
+                .map((joke) => (
+                  <JokeCard
+                    key={joke.id}
+                    theJoke={joke.value}
+                    category={joke.categories}
+                    randomImage={
+                      images[Math.floor(Math.random() * images.length)]
+                    }
+                  />
+                ))}
         </Box>
-        ;
       </VStack>
     </Box>
   );
