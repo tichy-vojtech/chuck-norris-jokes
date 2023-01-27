@@ -4,12 +4,13 @@ import {
   CardBody,
   Image,
   Heading,
-  HStack,
   Text,
   Button,
   Spacer,
   Tooltip,
   VStack,
+  CardFooter,
+  Flex,
 } from "@chakra-ui/react";
 import { FaStar } from "react-icons/fa";
 
@@ -19,8 +20,9 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
   return (
     <Card maxW="sm" borderRadius="lg">
       <CardBody>
-        <HStack>
+        <Flex>
           <Image
+            mr="2"
             src={randomImage}
             alt="Chuck Norris"
             borderRadius="lg"
@@ -30,39 +32,65 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
 
           {theJoke?.length > maxCardWidth ? (
             <VStack>
-              <Heading size="xs">
+              <Heading maxWidth={maxCardWidth} px="2" size="xs">
                 {showMore ? theJoke : `${theJoke?.substring(0, maxCardWidth)}`}
               </Heading>
               <Button
                 variant="ghost"
-                color="blue"
+                background="white"
+                color="black"
                 size="xs"
+                _hover={{
+                  background: "gray.300",
+                }}
                 onClick={() => setShowMore(!showMore)}
               >
                 {showMore ? "Show less" : "Show more"}
               </Button>
             </VStack>
           ) : (
-            <Heading size="xs">{theJoke}</Heading>
+            <Heading maxWidth={maxCardWidth} size="xs">
+              {theJoke}
+            </Heading>
           )}
-        </HStack>
+        </Flex>
+      </CardBody>
 
-        <HStack>
-          {category?.length && (
+      {category.length > 0 ? (
+        <CardFooter>
+          <Flex justifyContent="space-between" width="100%">
             <Text mt="2">
               Category: <b>{category}</b>
             </Text>
-          )}
-          <Spacer />
-          <Tooltip label="Is this joke awesome? You can save it ...">
-            <Button variant="ghost">
-              <Text color="orange.300">
-                <FaStar />
-              </Text>
-            </Button>
-          </Tooltip>
-        </HStack>
-      </CardBody>
+            <Spacer />
+            <Tooltip label="Is this joke awesome? You can save it ...">
+              <Button variant="ghost">
+                <Text color="orange.300">
+                  <FaStar />
+                </Text>
+              </Button>
+            </Tooltip>
+          </Flex>
+        </CardFooter>
+      ) : (
+        <CardFooter h="20">
+          <Flex
+            justifyContent="space-between"
+            alignItems="flex-start"
+            width="100%"
+          >
+            {/* <Text></Text> */}
+            <Spacer />
+            <Tooltip label="Is this joke awesome? You can save it ...">
+              <Button variant="ghost">
+                <Text color="orange.300">
+                  <FaStar />
+                </Text>
+              </Button>
+            </Tooltip>
+          </Flex>
+        </CardFooter>
+      )}
     </Card>
   );
 };

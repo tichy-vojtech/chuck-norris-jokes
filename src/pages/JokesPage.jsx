@@ -5,6 +5,9 @@ import { getJoke } from "../api/getJoke";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import SearchInput from "../components/SearchInput";
+import ScrollToTop from "react-scroll-to-top";
+import "../App.css";
+
 
 import chuck1 from "../assets/chuck1.jpeg";
 import chuck2 from "../assets/chuck2.jpeg";
@@ -127,6 +130,7 @@ export function JokesPage() {
                 ))}
         </Box>
       </VStack>
+      <ScrollToTop smooth />
     </Box>
   );
 }
