@@ -8,7 +8,6 @@ import SearchInput from "../components/SearchInput";
 import ScrollToTop from "react-scroll-to-top";
 import "../App.css";
 
-
 import chuck1 from "../assets/chuck1.jpeg";
 import chuck2 from "../assets/chuck2.jpeg";
 import chuck3 from "../assets/chuck3.jpeg";
@@ -19,6 +18,7 @@ import chuck7 from "../assets/chuck7.jpeg";
 import chuck8 from "../assets/chuck8.jpeg";
 import chuck9 from "../assets/chuck9.jpeg";
 import chuck10 from "../assets/chuck10.jpeg";
+import NumberSlider from "../components/NumberSlider";
 
 export function JokesPage() {
   const images = [
@@ -43,22 +43,19 @@ export function JokesPage() {
 
   const [jokes, setJokes] = useState(INITIAL_STATE);
   const [randomJokes, setRandomJokes] = useState([]);
-  const [previousJokes, setPreviousJokes] = useState(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [sliderValue, setSliderValue] = useState(25);
 
-  function generateRandomJokes(jokes) {
-    let randomJokesTemp = [];
-    for (let i = 0; i < 20; i++) {
-      let randomJoke = jokes.result[Math.floor(Math.random() * jokes.total)];
-      if (!previousJokes.has(randomJoke.id)) {
-        randomJokesTemp.push(randomJoke);
-        previousJokes.add(randomJoke.id);
-      }
+  function generateRandomJokes(jokes, sliderValue) {
+    const randomJokesArray = [];
+    for (let i = 0; i < sliderValue; i++) {
+      const randomJokeIndex = Math.floor(Math.random() * jokes.total);
+      const randomJoke = jokes.result[randomJokeIndex];
+      randomJokesArray.push(randomJoke);
     }
-    setPreviousJokes(previousJokes);
-    setRandomJokes(randomJokesTemp);
+    setRandomJokes(randomJokesArray);
   }
 
   useEffect(() => {
@@ -67,7 +64,7 @@ export function JokesPage() {
     getJoke()
       .then((data) => {
         setJokes(data);
-        generateRandomJokes(data);
+        generateRandomJokes(data, sliderValue);
       })
       .catch((err) => {
         setError(err);
@@ -80,9 +77,10 @@ export function JokesPage() {
   function handleClick() {
     setIsLoading(true);
     setError(null);
-    generateRandomJokes(jokes);
+    generateRandomJokes(jokes, sliderValue);
     setIsLoading(false);
   }
+
   return (
     <Box px={5}>
       <VStack>
@@ -90,6 +88,14 @@ export function JokesPage() {
           placeholderText="Search for jokes"
           onChange={(value) => {
             setSearchTerm(value);
+          }}
+        />
+
+        <NumberSlider
+          value={sliderValue}
+          onChangeEnd={(val) => {
+            setSliderValue(val);
+            generateRandomJokes(jokes, val);
           }}
         />
 
