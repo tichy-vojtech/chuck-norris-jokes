@@ -5,10 +5,10 @@ import { getJoke } from "../api/getJoke";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import SearchInput from "../components/SearchInput";
-import ScrollToTop from "react-scroll-to-top";
 import "../App.css";
 
 import NumberSlider from "../components/NumberSlider";
+import { ScrollToTopButton } from "../components/ScrollToTopButton";
 
 export function JokesPage() {
   const INITIAL_STATE = {
@@ -113,7 +113,7 @@ export function JokesPage() {
                 ))}
         </Box>
       </VStack>
-      <ScrollToTop smooth />
+      <ScrollToTopButton />
     </Box>
   );
 }
