@@ -8,33 +8,9 @@ import SearchInput from "../components/SearchInput";
 import ScrollToTop from "react-scroll-to-top";
 import "../App.css";
 
-import chuck1 from "../assets/chuck1.jpeg";
-import chuck2 from "../assets/chuck2.jpeg";
-import chuck3 from "../assets/chuck3.jpeg";
-import chuck4 from "../assets/chuck4.jpeg";
-import chuck5 from "../assets/chuck5.jpeg";
-import chuck6 from "../assets/chuck6.jpeg";
-import chuck7 from "../assets/chuck7.jpeg";
-import chuck8 from "../assets/chuck8.jpeg";
-import chuck9 from "../assets/chuck9.jpeg";
-import chuck10 from "../assets/chuck10.jpeg";
 import NumberSlider from "../components/NumberSlider";
 
 export function JokesPage() {
-  const images = [
-    chuck1,
-    chuck2,
-    chuck3,
-    chuck4,
-    chuck5,
-    chuck5,
-    chuck6,
-    chuck7,
-    chuck8,
-    chuck9,
-    chuck10,
-  ];
-
   const INITIAL_STATE = {
     data: [],
     isLoading: false,
@@ -47,6 +23,7 @@ export function JokesPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sliderValue, setSliderValue] = useState(25);
+  const numberOfImagies = 10;
 
   function generateRandomJokes(jokes, sliderValue) {
     const randomJokesArray = [];
@@ -111,9 +88,9 @@ export function JokesPage() {
                   key={joke.id}
                   theJoke={joke.value}
                   category={joke.categories}
-                  randomImage={
-                    images[Math.floor(Math.random() * images.length)]
-                  }
+                  randomImage={`/ChuckNorrisImage/chuck${
+                    Math.floor(Math.random() * numberOfImagies) + 1
+                  }.jpeg`}
                 />
               ))
             : jokes.result
@@ -129,9 +106,9 @@ export function JokesPage() {
                     key={joke.id}
                     theJoke={joke.value}
                     category={joke.categories}
-                    randomImage={
-                      images[Math.floor(Math.random() * images.length)]
-                    }
+                    randomImage={`/ChuckNorrisImage/chuck${Math.floor(
+                      Math.random() * numberOfImagies
+                    )}.jpeg`}
                   />
                 ))}
         </Box>

@@ -3,33 +3,9 @@ import { useState, useEffect } from "react";
 import JokeCard from "../components/JokeCard";
 import { getJoke } from "../api/getJoke";
 import { useParams } from "react-router-dom";
-import chuck1 from "../assets/chuck1.jpeg";
-import chuck2 from "../assets/chuck2.jpeg";
-import chuck3 from "../assets/chuck3.jpeg";
-import chuck4 from "../assets/chuck4.jpeg";
-import chuck5 from "../assets/chuck5.jpeg";
-import chuck6 from "../assets/chuck6.jpeg";
-import chuck7 from "../assets/chuck7.jpeg";
-import chuck8 from "../assets/chuck8.jpeg";
-import chuck9 from "../assets/chuck9.jpeg";
-import chuck10 from "../assets/chuck10.jpeg";
 import SearchInput from "../components/SearchInput";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-
-const images = [
-  chuck1,
-  chuck2,
-  chuck3,
-  chuck4,
-  chuck5,
-  chuck5,
-  chuck6,
-  chuck7,
-  chuck8,
-  chuck9,
-  chuck10,
-];
 
 const INITIAL_STATE = {
   data: [],
@@ -44,7 +20,7 @@ export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const numberOfImagies = 10;
   function generateRandomJokes(jokes) {
     console.log(jokes);
     const categoryJokes = jokes.result.filter(
@@ -91,9 +67,9 @@ export default function CategoryJokesPage() {
                   key={joke.id}
                   theJoke={joke.value}
                   category={joke.categories}
-                  randomImage={
-                    images[Math.floor(Math.random() * images.length)]
-                  }
+                  randomImage={`/ChuckNorrisImage/chuck${Math.floor(
+                    Math.random() * numberOfImagies
+                  )}.jpeg`}
                 />
               ))
             : jokes.result
@@ -109,9 +85,9 @@ export default function CategoryJokesPage() {
                     key={joke.id}
                     theJoke={joke.value}
                     category={joke.categories}
-                    randomImage={
-                      images[Math.floor(Math.random() * images.length)]
-                    }
+                    randomImage={`/ChuckNorrisImage/chuck${Math.floor(
+                      Math.random() * numberOfImagies
+                    )}.jpeg`}
                   />
                 ))}
         </Box>
