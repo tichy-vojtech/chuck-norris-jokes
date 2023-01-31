@@ -19,6 +19,7 @@ const NumberSlider = ({ inputValue, onChangeEnd }) => {
       min={0}
       max={50}
       w="50%"
+      zIndex="0"
       value={value}
       onChange={(val) => setValue(val)}
       onChangeEnd={(val) => handleChangeEnd(val)}

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import SearchInput from "../components/SearchInput";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import { ScrollToTopButton } from "../components/ScrollToTopButton";
 
 const INITIAL_STATE = {
   data: [],
@@ -92,6 +93,7 @@ export default function CategoryJokesPage() {
                 ))}
         </Box>
       </VStack>
+      <ScrollToTopButton />
     </Box>
   );
 }
