@@ -106,9 +106,9 @@ export function JokesPage() {
                     key={joke.id}
                     theJoke={joke.value}
                     category={joke.categories}
-                    randomImage={`/ChuckNorrisImage/chuck${Math.floor(
-                      Math.random() * numberOfImagies
-                    )}.jpeg`}
+                    randomImage={`/ChuckNorrisImage/chuck${
+                      Math.floor(Math.random() * numberOfImagies) + 1
+                    }.jpeg`}
                   />
                 ))}
         </Box>
