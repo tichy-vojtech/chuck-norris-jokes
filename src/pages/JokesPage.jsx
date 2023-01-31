@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import Error from "../components/Error";
 import SearchInput from "../components/SearchInput";
 import "../App.css";
+import { useToast } from "@chakra-ui/react";
 
 import NumberSlider from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
@@ -23,7 +24,9 @@ export function JokesPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sliderValue, setSliderValue] = useState(25);
+
   const numberOfImagies = 10;
+  const toast = useToast();
 
   function generateRandomJokes(jokes, sliderValue) {
     const randomJokesArray = [];
@@ -45,6 +48,12 @@ export function JokesPage() {
       })
       .catch((err) => {
         setError(err);
+        toast({
+          description: "Somethink went wrong",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -56,6 +65,12 @@ export function JokesPage() {
     setError(null);
     generateRandomJokes(jokes, sliderValue);
     setIsLoading(false);
+    toast({
+      description: "Successfully generated jokes",
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+    });
   }
 
   return (
@@ -69,7 +84,7 @@ export function JokesPage() {
         />
 
         <NumberSlider
-          value={sliderValue}
+          inputValue={sliderValue}
           onChangeEnd={(val) => {
             setSliderValue(val);
             generateRandomJokes(jokes, val);
