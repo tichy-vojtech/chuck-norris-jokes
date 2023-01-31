@@ -84,7 +84,7 @@ export function JokesPage() {
         />
 
         <NumberSlider
-          value={sliderValue}
+          inputValue={sliderValue}
           onChangeEnd={(val) => {
             setSliderValue(val);
             generateRandomJokes(jokes, val);
