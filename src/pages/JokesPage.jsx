@@ -10,7 +10,7 @@ import { useToast } from "@chakra-ui/react";
 import { NumberSlider } from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { generateRandomJokes } from "../utils/generateRandomJokes";
-import { useJokes } from "../customHooks/useJokes";
+import { useJokes } from "../hooks/useJokes";
 
 export function JokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
