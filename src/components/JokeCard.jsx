@@ -39,13 +39,12 @@ export function JokeCard({ joke, category, randomImage }) {
                 {showMore ? joke : `${joke?.substring(0, maxCardWidth)}...`}
               </Heading>
               <Button
-                variant="ghost"
-                background="white"
+                variant="outline"
                 color="black"
                 size="xs"
-                _hover={{
-                  background: "gray.300",
-                }}
+                // _hover={{
+                //   background: "gray.300",
+                // }}
                 onClick={() => setShowMore(!showMore)}
               >
                 {showMore ? " Show less" : " Show more"}

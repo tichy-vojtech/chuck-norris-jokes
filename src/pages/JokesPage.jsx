@@ -16,6 +16,7 @@ export function JokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const numberOfImages = 10;
   const toast = useToast();
+
   const {
     jokes,
     randomJokes,
@@ -27,6 +28,7 @@ export function JokesPage() {
     setRandomJokes,
     setSliderValue,
   } = useJokes();
+
   function handleClick() {
     setIsLoading(true);
     setError(null);

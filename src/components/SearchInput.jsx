@@ -7,6 +7,7 @@ export function SearchInput({ placeholderText, onChange }) {
     <Box py="4">
       <InputGroup>
         <Input
+          variant="pill"
           placeholder={placeholderText}
           onChange={(event) => onChange(event.target.value)}
         />
