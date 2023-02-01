@@ -5,7 +5,7 @@ import { SearchInput } from "../components/SearchInput";
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
-import { useCategories } from "../customHooks/useCategories";
+import { useCategories } from "../hooks/useCategories";
 
 export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
