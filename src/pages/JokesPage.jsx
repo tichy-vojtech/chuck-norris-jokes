@@ -66,35 +66,23 @@ export function JokesPage() {
         {isLoading && <Loader />}
         {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
-          {searchTerm === ""
-            ? randomJokes.map((joke) => (
-                <JokeCard
-                  key={joke.id}
-                  joke={joke.value}
-                  category={joke.categories}
-                  randomImage={`/ChuckNorrisImage/chuck${
-                    Math.floor(Math.random() * numberOfImages) + 1
-                  }.jpeg`}
-                />
-              ))
-            : jokes.result
-                ?.filter(
-                  (joke) =>
-                    joke.value
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase()) || searchTerm === ""
-                )
-                .slice(0, 25)
-                .map((joke) => (
-                  <JokeCard
-                    key={joke.id}
-                    joke={joke.value}
-                    category={joke.categories}
-                    randomImage={`/ChuckNorrisImage/chuck${
-                      Math.floor(Math.random() * numberOfImages) + 1
-                    }.jpeg`}
-                  />
-                ))}
+          {(searchTerm === "" ? randomJokes : jokes.result)
+            .filter(
+              (joke) =>
+                joke.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                searchTerm === ""
+            )
+            .slice(0, 25)
+            .map((joke) => (
+              <JokeCard
+                key={joke.id}
+                joke={joke.value}
+                category={joke.categories}
+                randomImage={`/ChuckNorrisImage/chuck${
+                  Math.floor(Math.random() * numberOfImages) + 1
+                }.jpeg`}
+              />
+            ))}
         </Box>
       </VStack>
       <ScrollToTopButton />
