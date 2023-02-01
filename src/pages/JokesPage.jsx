@@ -1,7 +1,6 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { JokeCard } from "../components/JokeCard";
-import { getData } from "../api/getData";
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
 import { SearchInput } from "../components/SearchInput";
@@ -10,51 +9,28 @@ import { useToast } from "@chakra-ui/react";
 
 import { NumberSlider } from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
-import { GenerateRandomJokes } from "../components/GenerateRandomJokes";
+import { generateRandomJokes } from "../utils/generateRandomJokes";
+import { useJokes } from "../customHooks/useJokes";
 
 export function JokesPage() {
-  const INITIAL_STATE = {
-    data: [],
-    isLoading: false,
-    isError: false,
-  };
-
-  const [jokes, setJokes] = useState(INITIAL_STATE);
-  const [randomJokes, setRandomJokes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [sliderValue, setSliderValue] = useState(25);
-
   const numberOfImages = 10;
   const toast = useToast();
-
-  useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-    getData("search?query=chu")
-      .then((data) => {
-        setJokes(data);
-        setRandomJokes(GenerateRandomJokes(data, sliderValue));
-      })
-      .catch((err) => {
-        setError(err.message);
-        toast({
-          description: "Something went wrong",
-          status: "error",
-          duration: 4000,
-          isClosable: false,
-        });
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
+  const {
+    jokes,
+    randomJokes,
+    isLoading,
+    error,
+    sliderValue,
+    setIsLoading,
+    setError,
+    setRandomJokes,
+    setSliderValue,
+  } = useJokes();
   function handleClick() {
     setIsLoading(true);
     setError(null);
-    setRandomJokes(GenerateRandomJokes(jokes, sliderValue));
+    setRandomJokes(generateRandomJokes(jokes, sliderValue));
     setIsLoading(false);
     toast({
       description: "Successfully generated jokes",
@@ -78,7 +54,7 @@ export function JokesPage() {
           inputValue={sliderValue}
           onChangeEnd={(val) => {
             setSliderValue(val);
-            setRandomJokes(GenerateRandomJokes(jokes, val));
+            setRandomJokes(generateRandomJokes(jokes, val));
           }}
         />
 
