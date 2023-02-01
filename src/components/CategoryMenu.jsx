@@ -8,15 +8,15 @@ import {
   MenuDivider,
   Heading,
 } from "@chakra-ui/react";
-import { getCategories } from "../api/getCategories";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { getData } from "../api/getData";
 
 export function CategoryMenu() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    getCategories().then((category) => setCategories(category));
+    getData("categories").then((category) => setCategories(category));
   }, []);
 
   return (

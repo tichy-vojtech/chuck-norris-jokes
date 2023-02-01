@@ -1,6 +1,6 @@
 import { Center, Spinner } from "@chakra-ui/react";
 
-function Loader() {
+export function Loader() {
   return (
     <Center>
       <Spinner
@@ -13,5 +13,3 @@ function Loader() {
     </Center>
   );
 }
-
-export default Loader;

@@ -4,9 +4,9 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 
 export function ScrollToTopButton() {
   const [visible, setVisible] = useState(false);
-  const scrollButtonVisibilityEdge = 200;
+  const visibilityEdge = 200;
 
-  function handleClick() {
+  function scrollToTop() {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -15,13 +15,13 @@ export function ScrollToTopButton() {
 
   window.addEventListener("scroll", () => {
     setVisible(false);
-    if (window.scrollY > scrollButtonVisibilityEdge) setVisible(true);
+    if (window.scrollY > visibilityEdge) setVisible(true);
   });
 
   if (visible) {
     return (
       <Button
-        onClick={handleClick}
+        onClick={scrollToTop}
         position="fixed"
         colorScheme="blue"
         bottom="16"

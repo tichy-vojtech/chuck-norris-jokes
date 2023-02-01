@@ -1,11 +1,11 @@
-import { VStack, Box } from "@chakra-ui/react";
+import { VStack, Box, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import JokeCard from "../components/JokeCard";
-import { getJoke } from "../api/getJoke";
+import { JokeCard } from "../components/JokeCard";
+import { getData } from "../api/getData";
 import { useParams } from "react-router-dom";
-import SearchInput from "../components/SearchInput";
-import Loader from "../components/Loader";
-import Error from "../components/Error";
+import { SearchInput } from "../components/SearchInput";
+import { Loader } from "../components/Loader";
+import { Error } from "../components/Error";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 
 const INITIAL_STATE = {
@@ -17,31 +17,36 @@ const INITIAL_STATE = {
 export default function CategoryJokesPage() {
   const { category } = useParams();
   const [jokes, setJokes] = useState(INITIAL_STATE);
-  const [randomJokes, setRandomJokes] = useState([]);
+  const [categoryJokes, setCategoryJokes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const numberOfImagies = 10;
-  function generateRandomJokes(jokes) {
-    console.log(jokes);
+  const numberOfImages = 10;
+  const toast = useToast();
+
+  function generateCategoryJokes(jokes) {
     const categoryJokes = jokes.result.filter(
       (joke) => joke.categories[0] === category
     );
-
-    setRandomJokes(categoryJokes);
+    setCategoryJokes(categoryJokes);
   }
 
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    getJoke()
+    getData("search?query=chuck")
       .then((data) => {
         setJokes({ data, isLoading: false, isError: false });
-        generateRandomJokes(data);
+        generateCategoryJokes(data);
       })
       .catch((err) => {
-        console.log(err);
         setError(err);
+        toast({
+          description: "Somethink went wrong",
+          status: "error",
+          duration: 4000,
+          isClosable: false,
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -63,13 +68,13 @@ export default function CategoryJokesPage() {
         {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
           {searchTerm === ""
-            ? randomJokes.map((joke) => (
+            ? categoryJokes.map((joke) => (
                 <JokeCard
                   key={joke.id}
-                  theJoke={joke.value}
+                  joke={joke.value}
                   category={joke.categories}
                   randomImage={`/ChuckNorrisImage/chuck${
-                    Math.floor(Math.random() * numberOfImagies) + 1
+                    Math.floor(Math.random() * numberOfImages) + 1
                   }.jpeg`}
                 />
               ))
@@ -84,10 +89,10 @@ export default function CategoryJokesPage() {
                 .map((joke) => (
                   <JokeCard
                     key={joke.id}
-                    theJoke={joke.value}
+                    joke={joke.value}
                     category={joke.categories}
                     randomImage={`/ChuckNorrisImage/chuck${
-                      Math.floor(Math.random() * numberOfImagies) + 1
+                      Math.floor(Math.random() * numberOfImages) + 1
                     }.jpeg`}
                   />
                 ))}
