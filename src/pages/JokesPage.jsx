@@ -32,7 +32,7 @@ export function JokesPage() {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    getData("search?query=c")
+    getData("search?query=chu")
       .then((data) => {
         setJokes(data);
         setRandomJokes(GenerateRandomJokes(data, sliderValue));
