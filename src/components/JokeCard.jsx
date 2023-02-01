@@ -6,17 +6,15 @@ import {
   Heading,
   Text,
   Button,
-  Spacer,
-  Tooltip,
   VStack,
   CardFooter,
   Flex,
 } from "@chakra-ui/react";
-import { FaStar } from "react-icons/fa";
 
-const JokeCard = ({ theJoke, category, randomImage }) => {
+export function JokeCard({ joke, category, randomImage }) {
   const [showMore, setShowMore] = useState(false);
   const maxCardWidth = 200;
+
   return (
     <Card maxW="sm" borderRadius="lg" width="100%">
       <CardBody>
@@ -28,10 +26,9 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
             borderRadius="lg"
             boxSize={["100%", "150px"]}
             objectFit="cover"
-            pb={3}
           />
 
-          {theJoke?.length > maxCardWidth ? (
+          {joke?.length > maxCardWidth ? (
             <VStack>
               <Heading
                 maxWidth={maxCardWidth}
@@ -39,7 +36,7 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
                 size="xs"
                 textAlign="center"
               >
-                {showMore ? theJoke : `${theJoke?.substring(0, maxCardWidth)}`}
+                {showMore ? joke : `${joke?.substring(0, maxCardWidth)}...`}
               </Heading>
               <Button
                 variant="ghost"
@@ -56,7 +53,7 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
             </VStack>
           ) : (
             <Heading maxWidth={maxCardWidth} size="xs" textAlign="center">
-              {theJoke}
+              {joke}
             </Heading>
           )}
         </Flex>
@@ -65,7 +62,7 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
       {category.length > 0 ? (
         <CardFooter>
           <Flex justifyContent="space-between" width="100%">
-            <Text mt="2" textAlign="center">
+            <Text textAlign="center">
               Category: <b>{category}</b>
             </Text>
           </Flex>
@@ -75,6 +72,4 @@ const JokeCard = ({ theJoke, category, randomImage }) => {
       )}
     </Card>
   );
-};
-
-export default JokeCard;
+}

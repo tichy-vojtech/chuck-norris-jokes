@@ -1,13 +1,11 @@
 import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 import React from "react";
 
-function Error({ children }) {
+export function Error({ message }) {
   return (
     <Alert status="error">
       <AlertIcon />
-      <AlertTitle>{children}</AlertTitle>
+      <AlertTitle>{message}</AlertTitle>
     </Alert>
   );
 }
-
-export default Error;
