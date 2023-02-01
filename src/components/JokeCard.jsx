@@ -51,7 +51,12 @@ export function JokeCard({ joke, category, randomImage }) {
               </Button>
             </VStack>
           ) : (
-            <Heading maxWidth={maxCardWidth} size="xs" textAlign="center">
+            <Heading
+              maxWidth={maxCardWidth}
+              size="xs"
+              textAlign="center"
+              mt={2}
+            >
               {joke}
             </Heading>
           )}

@@ -1,4 +1,5 @@
-export function GenerateRandomJokes(jokes, sliderValue) {
+export function generateRandomJokes(jokes, sliderValue) {
+  //rename
   const randomJokesArray = [];
 
   for (let i = 0; i < sliderValue; i++) {
