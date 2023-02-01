@@ -18,8 +18,7 @@ export function NumberSlider({ inputValue, onChangeEnd }) {
     <Slider
       min={0}
       max={50}
-
-      w={["100%", "50%"]}
+      w={["100%", "85%", "75%", "50%"]}
       zIndex="0"
       value={currentValue}
       onChange={(val) => setCurrentValue(val)}
