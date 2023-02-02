@@ -1,4 +1,4 @@
-import { VStack, Box } from "@chakra-ui/react";
+import { VStack, Box, Tag } from "@chakra-ui/react";
 import { useState } from "react";
 import { JokeCard } from "../components/JokeCard";
 import { SearchInput } from "../components/SearchInput";
@@ -12,7 +12,7 @@ export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sliderValue, setSliderValue] = useState(25);
   const numberOfImages = 10;
-  const { jokes, categoryJokes, isLoading, error } = useCategories();
+  const { jokes, categoryJokes, isLoading, error, category } = useCategories();
 
   return (
     <Box px={5}>
@@ -32,6 +32,8 @@ export default function CategoryJokesPage() {
             }}
           />
         )}
+
+        <Tag>Now you are at {category} category</Tag>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">

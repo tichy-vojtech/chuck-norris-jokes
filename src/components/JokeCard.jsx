@@ -40,11 +40,7 @@ export function JokeCard({ joke, category, randomImage }) {
               </Heading>
               <Button
                 variant="outline"
-                color="black"
                 size="xs"
-                // _hover={{
-                //   background: "gray.300",
-                // }}
                 onClick={() => setShowMore(!showMore)}
               >
                 {showMore ? " Show less" : " Show more"}

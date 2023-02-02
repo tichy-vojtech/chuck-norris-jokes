@@ -51,7 +51,6 @@ export function JokesPage() {
             setSearchTerm(value);
           }}
         />
-
         <NumberSlider
           inputValue={sliderValue}
           onChangeEnd={(val) => {

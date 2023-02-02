@@ -41,5 +41,5 @@ export function useCategories() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
-  return { jokes, categoryJokes, isLoading, error };
+  return { jokes, categoryJokes, isLoading, error, category };
 }

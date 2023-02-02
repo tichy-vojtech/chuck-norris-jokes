@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineArrowUp } from "react-icons/ai";
 
 export function ScrollToTopButton() {
@@ -13,11 +13,14 @@ export function ScrollToTopButton() {
     });
   }
 
-  window.addEventListener("scroll", () => {
-    setVisible(false);
-    if (window.scrollY > visibilityEdge) setVisible(true);
-  });
-
+  useEffect(() => {
+    const scrollOverListener = () => {
+      setVisible(false);
+      if (window.scrollY > visibilityEdge) setVisible(true);
+    };
+    window.addEventListener("scroll", scrollOverListener);
+    return () => window.removeEventListener("scroll", scrollOverListener);
+  }, []);
   if (visible) {
     return (
       <Button
