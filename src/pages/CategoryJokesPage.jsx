@@ -10,6 +10,7 @@ import { useCategories } from "../hooks/useCategories";
 
 export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [sliderValue, setSliderValue] = useState(25);
   const numberOfImages = 10;
   const { jokes, categoryJokes, isLoading, error } = useCategories();
 
