@@ -18,11 +18,11 @@ export function JokesPage() {
   const toast = useToast();
 
   const {
-    jokes,
+    jokes, //rename
     randomJokes,
     isLoading,
     error,
-    sliderValue,
+    sliderValue, //rename
     setIsLoading,
     setError,
     setRandomJokes,
@@ -71,14 +71,14 @@ export function JokesPage() {
                 joke.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 searchTerm === ""
             )
-            .slice(0, 25)
+            .slice(0, sliderValue)
             .map((joke) => (
               <JokeCard
                 key={joke.id}
                 joke={joke.value}
                 category={joke.categories}
                 randomImage={`/ChuckNorrisImage/chuck${
-                  Math.floor(Math.random() * numberOfImages) + 1
+                  Math.floor(Math.random() * numberOfImages) + 1 // do premenej
                 }.jpeg`}
               />
             ))}

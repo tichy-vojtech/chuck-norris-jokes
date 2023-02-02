@@ -37,36 +37,23 @@ export default function CategoryJokesPage() {
         {isLoading && <Loader />}
         {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
-          {searchTerm === "" && categoryJokes.length > 25
-            ? categoryJokes
-                .map((joke) => (
-                  <JokeCard
-                    key={joke.id}
-                    joke={joke.value}
-                    category={joke.categories}
-                    randomImage={`/ChuckNorrisImage/chuck${
-                      Math.floor(Math.random() * numberOfImages) + 1
-                    }.jpeg`}
-                  />
-                ))
-                .slice(0, sliderValue)
-            : categoryJokes
-                ?.filter(
-                  (joke) =>
-                    joke.value
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase()) || searchTerm === ""
-                )
-                .map((joke) => (
-                  <JokeCard
-                    key={joke.id}
-                    joke={joke.value}
-                    category={joke.categories}
-                    randomImage={`/ChuckNorrisImage/chuck${
-                      Math.floor(Math.random() * numberOfImages) + 1
-                    }.jpeg`}
-                  />
-                ))}
+          {(searchTerm === ""
+            ? categoryJokes.slice(0, sliderValue)
+            : categoryJokes.filter(
+                (joke) =>
+                  joke.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  searchTerm === ""
+              )
+          ).map((joke) => (
+            <JokeCard
+              key={joke.id}
+              joke={joke.value}
+              category={joke.categories}
+              randomImage={`/ChuckNorrisImage/chuck${
+                Math.floor(Math.random() * numberOfImages) + 1
+              }.jpeg`}
+            />
+          ))}
         </Box>
       </VStack>
       <ScrollToTopButton />
