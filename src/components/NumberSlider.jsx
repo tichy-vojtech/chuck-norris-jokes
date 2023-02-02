@@ -3,10 +3,11 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Slider,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-export function NumberSlider({ inputValue, onChangeEnd }) {
+export function NumberSlider({ inputValue, onChangeEnd, maxSliderValue }) {
   const [currentValue, setCurrentValue] = useState(inputValue);
 
   const handleChangeEnd = (val) => {
@@ -17,7 +18,7 @@ export function NumberSlider({ inputValue, onChangeEnd }) {
   return (
     <Slider
       min={0}
-      max={50}
+      max={maxSliderValue ?? 50}
       w={["100%", "85%", "75%", "50%"]}
       zIndex="0"
       value={currentValue}
@@ -27,12 +28,14 @@ export function NumberSlider({ inputValue, onChangeEnd }) {
       <SliderTrack>
         <SliderFilledTrack />
       </SliderTrack>
-      <SliderThumb
-        fontSize="sm"
-        boxSize="32px"
-        children={currentValue}
-        color="black"
-      />
+      <Tooltip label="Number of jokes" placement="top">
+        <SliderThumb
+          fontSize="sm"
+          boxSize="32px"
+          children={currentValue}
+          color="black"
+        />
+      </Tooltip>
     </Slider>
   );
 }

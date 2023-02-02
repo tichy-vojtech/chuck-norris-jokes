@@ -5,6 +5,7 @@ import { SearchInput } from "../components/SearchInput";
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
+import { NumberSlider } from "../components/NumberSlider";
 import { useCategories } from "../hooks/useCategories";
 
 export default function CategoryJokesPage() {
@@ -21,28 +22,38 @@ export default function CategoryJokesPage() {
             setSearchTerm(value);
           }}
         />
+        {categoryJokes.length > 25 && (
+          <NumberSlider
+            maxSliderValue={categoryJokes.length}
+            inputValue={sliderValue}
+            onChangeEnd={(val) => {
+              setSliderValue(val);
+            }}
+          />
+        )}
         {isLoading && <Loader />}
         {error && <Error message={error} />}
         <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
-          {searchTerm === ""
-            ? categoryJokes.map((joke) => (
-                <JokeCard
-                  key={joke.id}
-                  joke={joke.value}
-                  category={joke.categories}
-                  randomImage={`/ChuckNorrisImage/chuck${
-                    Math.floor(Math.random() * numberOfImages) + 1
-                  }.jpeg`}
-                />
-              ))
-            : jokes.result
+          {searchTerm === "" && categoryJokes.length > 25
+            ? categoryJokes
+                .map((joke) => (
+                  <JokeCard
+                    key={joke.id}
+                    joke={joke.value}
+                    category={joke.categories}
+                    randomImage={`/ChuckNorrisImage/chuck${
+                      Math.floor(Math.random() * numberOfImages) + 1
+                    }.jpeg`}
+                  />
+                ))
+                .slice(0, sliderValue)
+            : categoryJokes
                 ?.filter(
                   (joke) =>
                     joke.value
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase()) || searchTerm === ""
                 )
-                .slice(0, 25)
                 .map((joke) => (
                   <JokeCard
                     key={joke.id}
