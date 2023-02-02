@@ -42,8 +42,10 @@ export default function CategoryJokesPage() {
             }}
           />
         )}
+        <Tag p="2" px="4">
+          Now you are at {category} category
+        </Tag>
 
-        <Tag>Now you are at {category} category</Tag>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
         <JokesListing filterJokes={filterJokes()} />
