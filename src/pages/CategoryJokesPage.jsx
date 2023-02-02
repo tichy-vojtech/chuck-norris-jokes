@@ -13,6 +13,7 @@ export default function CategoryJokesPage() {
   const [sliderValue, setSliderValue] = useState(25);
   const numberOfImages = 10;
   const { jokes, categoryJokes, isLoading, error } = useCategories();
+  const [sliderValue, setSliderValue] = useState(25);
 
   return (
     <Box px={5}>

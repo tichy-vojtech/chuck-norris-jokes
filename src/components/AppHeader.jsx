@@ -18,7 +18,7 @@ export function AppHeader() {
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <Link to="/">
           <Heading p={2} py={4}>
-            CN Jokes
+            DVD Jokes
           </Heading>
         </Link>
         <Flex alignItems={"center"}>
