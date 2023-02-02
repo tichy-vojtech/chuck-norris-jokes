@@ -1,18 +1,28 @@
 import { VStack, Box, Tag } from "@chakra-ui/react";
 import { useState } from "react";
-import { JokeCard } from "../components/JokeCard";
 import { SearchInput } from "../components/SearchInput";
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { NumberSlider } from "../components/NumberSlider";
 import { useCategories } from "../hooks/useCategories";
+import { JokesListing } from "../components/JokesListing";
 
 export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sliderValue, setSliderValue] = useState(25);
-  const numberOfImages = 10;
-  const { jokes, categoryJokes, isLoading, error, category } = useCategories();
+  const [sliderValue, setSliderValue] = useState(25); //rename
+  const { categoryJokes, isLoading, error, category } = useCategories();
+
+  function filterJokes() {
+    //rename
+    return searchTerm === ""
+      ? categoryJokes.slice(0, sliderValue)
+      : categoryJokes
+          .filter(({ value }) =>
+            value.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .slice(0, sliderValue);
+  }
 
   return (
     <Box px={5}>
@@ -36,25 +46,7 @@ export default function CategoryJokesPage() {
         <Tag>Now you are at {category} category</Tag>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
-        <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
-          {(searchTerm === ""
-            ? categoryJokes.slice(0, sliderValue)
-            : categoryJokes.filter(
-                (joke) =>
-                  joke.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  searchTerm === ""
-              )
-          ).map((joke) => (
-            <JokeCard
-              key={joke.id}
-              joke={joke.value}
-              category={joke.categories}
-              randomImage={`/ChuckNorrisImage/chuck${
-                Math.floor(Math.random() * numberOfImages) + 1
-              }.jpeg`}
-            />
-          ))}
-        </Box>
+        <JokesListing filterJokes={filterJokes()} />
       </VStack>
       <ScrollToTopButton />
     </Box>

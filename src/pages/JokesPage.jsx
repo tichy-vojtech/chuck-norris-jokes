@@ -1,6 +1,5 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
 import { useState } from "react";
-import { JokeCard } from "../components/JokeCard";
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
 import { SearchInput } from "../components/SearchInput";
@@ -11,10 +10,11 @@ import { NumberSlider } from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { generateRandomJokes } from "../utils/generateRandomJokes";
 import { useJokes } from "../hooks/useJokes";
+import { JokesListing } from "../components/JokesListing";
 
 export function JokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const numberOfImages = 10;
+
   const toast = useToast();
 
   const {
@@ -42,6 +42,16 @@ export function JokesPage() {
     });
   }
 
+  function filterJokes() {
+    return searchTerm === ""
+      ? randomJokes
+      : jokes.result
+          .filter(({ value }) =>
+            value.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .slice(0, sliderValue);
+  }
+
   return (
     <Box px={5}>
       <VStack>
@@ -64,25 +74,8 @@ export function JokesPage() {
         </Button>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
-        <Box display="flex" gap={10} flexWrap="wrap" justifyContent="center">
-          {(searchTerm === "" ? randomJokes : jokes.result)
-            .filter(
-              (joke) =>
-                joke.value.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                searchTerm === ""
-            )
-            .slice(0, sliderValue)
-            .map((joke) => (
-              <JokeCard
-                key={joke.id}
-                joke={joke.value}
-                category={joke.categories}
-                randomImage={`/ChuckNorrisImage/chuck${
-                  Math.floor(Math.random() * numberOfImages) + 1 // do premenej
-                }.jpeg`}
-              />
-            ))}
-        </Box>
+
+        <JokesListing filterJokes={filterJokes()} />
       </VStack>
       <ScrollToTopButton />
     </Box>
