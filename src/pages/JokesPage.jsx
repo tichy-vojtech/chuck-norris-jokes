@@ -59,7 +59,7 @@ export function JokesPage() {
           }}
         />
 
-        <Button colorScheme="blue" size="lg" my={2} onClick={handleClick}>
+        <Button variant="outline" size="lg" my={2} onClick={handleClick}>
           Get new Joke
         </Button>
         {isLoading && <Loader />}

@@ -26,9 +26,9 @@ export function ScrollToTopButton() {
       <Button
         onClick={scrollToTop}
         position="fixed"
-        colorScheme="blue"
         bottom="16"
         right="8"
+        variant="outline"
       >
         <AiOutlineArrowUp size={20} />
       </Button>

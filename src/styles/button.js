@@ -1,13 +1,14 @@
 import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 const outline = defineStyle({
-  backgroundColor: "gray.200",
+  backgroundColor: "blue.200",
   _dark: {
-    backgroundColor: "white",
+    backgroundColor: "blue.400",
   },
   _hover: {
+    bg: "blue.200",
     _dark: {
-      bg: "gray.100",
+      bg: "blue.500",
     },
   },
 });
