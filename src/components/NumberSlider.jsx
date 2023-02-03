@@ -17,7 +17,7 @@ export function NumberSlider({ inputValue, onChangeEnd, maxSliderValue }) {
 
   return (
     <Slider
-      min={0}
+      min={1}
       max={maxSliderValue ?? 50}
       w={["100%", "85%", "75%", "50%"]}
       zIndex="0"
