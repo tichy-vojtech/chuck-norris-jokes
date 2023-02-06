@@ -1,6 +1,5 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
 import { useState } from "react";
-import { useToast } from "@chakra-ui/react";
 
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
@@ -8,66 +7,43 @@ import { SearchInput } from "../components/SearchInput";
 import { NumberSlider } from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { JokesListing } from "../components/JokesListing";
-import { generateRandomJokes } from "../utils/generateRandomJokes";
 import { useJokes } from "../hooks/useJokes";
+import { INITIAL_SELECTED_JOKE_COUNT } from '../constants';
 
 export function JokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const toast = useToast();
+  const [selectedJokeCount, setSelectedJokeCount] = useState(INITIAL_SELECTED_JOKE_COUNT);
 
-  const {
-    jokes, // TODO rename
-    randomJokes,
-    isLoading,
-    error,
-    selectedJokeCount,
-    setIsLoading,
-    setError,
-    setRandomJokes,
-    setSelectedJokeCount,
-  } = useJokes();
-
-  function handleGetNewJokeClick() {
-    setIsLoading(true);
-    setError(null);
-    setRandomJokes(generateRandomJokes(jokes, selectedJokeCount));
-    setIsLoading(false);
-    toast({
-      description: "Successfully generated jokes",
-      status: "success",
-      duration: 4000,
-      isClosable: true,
-    });
+  function handleSearchInputChange(value) {
+    if (value.length > 2) {
+      setSearchTerm(value);
+    } 
   }
 
-  const filteredJokes = searchTerm === ""
-    ? randomJokes
-    : jokes.result
-      .filter(({ value }) =>
-        value.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .slice(0, selectedJokeCount);
+  const {
+    isLoading,
+    error,
+    jokes,
+    randomize,
+  } = useJokes(searchTerm, selectedJokeCount);
 
   return (
     <Box px={5}>
       <VStack>
         <SearchInput
-          placeholderText="Search for jokes"
-          onChange={setSearchTerm}
+          placeholder="Search for jokes"
+          onChange={handleSearchInputChange}
         />
         <NumberSlider
-          inputValue={selectedJokeCount}
-          onChangeEnd={(value) => {
-            setSelectedJokeCount(value);
-            setRandomJokes(generateRandomJokes(jokes, value));
-          }}
+          initialValue={selectedJokeCount}
+          onChangeEnd={setSelectedJokeCount}
         />
-        <Button variant="outline" size="lg" my={2} onClick={handleGetNewJokeClick}>
+        <Button variant="outline" size="lg" my={2} onClick={randomize}>
           Get new Joke
         </Button>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
-        {!isLoading && !error && <JokesListing filterJokes={filteredJokes} />}
+        {!isLoading && !error && <JokesListing filterJokes={jokes} />}
       </VStack>
       <ScrollToTopButton />
     </Box>

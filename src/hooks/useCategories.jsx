@@ -1,18 +1,15 @@
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+
 import { getData } from "../api/getData";
-import { generateCategoryJokes } from "../utils/generateCategoryJokes";
 
-const INITIAL_STATE = {
-  data: [],
-  isLoading: false,
-  isError: false,
-};
+export function generateCategoryJokes(jokes, category) {
+  return jokes.result.filter(
+    (joke) => joke.categories.includes(category)
+  );
+}
 
-export function useCategories() {
-  const { category } = useParams();
-  const [jokes, setJokes] = useState(INITIAL_STATE);
+export function useCategories(category) {
   const [categoryJokes, setCategoryJokes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,7 +20,6 @@ export function useCategories() {
     setError(null);
     getData("search?query=chu")
       .then((data) => {
-        setJokes({ data, isLoading: false, isError: false });
         setCategoryJokes(generateCategoryJokes(data, category));
       })
       .catch((err) => {
@@ -42,5 +38,5 @@ export function useCategories() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
-  return { jokes, categoryJokes, isLoading, error, category };
+  return { categoryJokes, isLoading, error };
 }

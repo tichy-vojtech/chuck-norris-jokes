@@ -11,9 +11,10 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
+const MAX_CARD_WIDTH = 200;
+
 export function JokeCard({ joke, category, randomImage }) {
   const [showMore, setShowMore] = useState(false);
-  const maxCardWidth = 200;
 
   return (
     <Card maxW="sm" borderRadius="lg" width="100%">
@@ -27,16 +28,15 @@ export function JokeCard({ joke, category, randomImage }) {
             boxSize={["100%", "150px"]}
             objectFit="cover"
           />
-
-          {joke?.length > maxCardWidth ? (
+          {joke?.length > MAX_CARD_WIDTH ? (
             <VStack>
               <Heading
-                maxWidth={maxCardWidth}
+                maxWidth={MAX_CARD_WIDTH}
                 px="2"
                 size="xs"
                 textAlign="center"
               >
-                {showMore ? joke : `${joke?.substring(0, maxCardWidth)}...`}
+                {showMore ? joke : `${joke?.substring(0, MAX_CARD_WIDTH)}...`}
               </Heading>
               <Button
                 variant="outline"
@@ -48,7 +48,7 @@ export function JokeCard({ joke, category, randomImage }) {
             </VStack>
           ) : (
             <Heading
-              maxWidth={maxCardWidth}
+              maxWidth={MAX_CARD_WIDTH}
               size="xs"
               textAlign="center"
               mt={2}
@@ -58,8 +58,7 @@ export function JokeCard({ joke, category, randomImage }) {
           )}
         </Flex>
       </CardBody>
-
-      {category.length > 0 ? (
+      {category.length > 0 && (
         <CardFooter>
           <Flex justifyContent="space-between" width="100%">
             <Text textAlign="center">
@@ -67,8 +66,6 @@ export function JokeCard({ joke, category, randomImage }) {
             </Text>
           </Flex>
         </CardFooter>
-      ) : (
-        <></>
       )}
     </Card>
   );

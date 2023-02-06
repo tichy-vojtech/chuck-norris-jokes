@@ -7,23 +7,24 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-export function NumberSlider({ inputValue, onChangeEnd, maxSliderValue }) {
-  const [currentValue, setCurrentValue] = useState(inputValue);
+const DEFAULT_MAX_SLIDER_VALUE = 50;
 
-  const handleChangeEnd = (val) => {
-    setCurrentValue(val);
-    onChangeEnd(val);
-  };
+export function NumberSlider({ 
+  initialValue,
+  onChangeEnd,
+  maxSliderValue = DEFAULT_MAX_SLIDER_VALUE
+}) {
+  const [currentValue, setCurrentValue] = useState(initialValue);
 
   return (
     <Slider
       min={1}
-      max={maxSliderValue ?? 50}
+      max={maxSliderValue}
       w={["100%", "85%", "75%", "50%"]}
       zIndex="0"
       value={currentValue}
-      onChange={(val) => setCurrentValue(val)}
-      onChangeEnd={(val) => handleChangeEnd(val)}
+      onChange={setCurrentValue}
+      onChangeEnd={onChangeEnd}
     >
       <SliderTrack>
         <SliderFilledTrack />
