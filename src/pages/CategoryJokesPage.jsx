@@ -1,5 +1,6 @@
 import { VStack, Box, Tag } from "@chakra-ui/react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { SearchInput } from "../components/SearchInput";
 import { Loader } from "../components/Loader";
@@ -13,7 +14,8 @@ import { INITIAL_SELECTED_JOKE_COUNT } from '../constants';
 export function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(INITIAL_SELECTED_JOKE_COUNT);
-  const { categoryJokes, isLoading, error, category } = useCategories();
+  const { category } = useParams();
+  const { categoryJokes, isLoading, error } = useCategories(category);
 
   const filteredJokes = searchTerm === ""
     ? categoryJokes.slice(0, selectedJokeCount)
@@ -27,13 +29,13 @@ export function CategoryJokesPage() {
     <Box px={5}>
       <VStack>
         <SearchInput
-          placeholderText="Search for jokes"
+          placeholder="Search for jokes"
           onChange={setSearchTerm}
         />
         {categoryJokes.length > 25 && (
           <NumberSlider
             maxSliderValue={categoryJokes.length}
-            inputValue={selectedJokeCount}
+            initialValue={selectedJokeCount}
             onChangeEnd={setSelectedJokeCount}
           />
         )}

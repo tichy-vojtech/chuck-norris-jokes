@@ -1,11 +1,10 @@
 import axios from "axios";
 
+const BASE_URL = 'https://api.chucknorris.io/jokes/';
+
 export async function getData(ending) {
-  try {
-    const endpoint = `https://api.chucknorris.io/jokes/${ending}`;
-    const response = await axios.get(endpoint);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const endpoint = `${BASE_URL}${ending}`;
+  const { data } = await axios.get(endpoint);
+  
+  return data;
 }

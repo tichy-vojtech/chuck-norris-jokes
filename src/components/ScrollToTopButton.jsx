@@ -2,9 +2,10 @@ import { Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { AiOutlineArrowUp } from "react-icons/ai";
 
+const VISIBILITY_EDGE = 200;
+
 export function ScrollToTopButton() {
   const [visible, setVisible] = useState(false);
-  const visibilityEdge = 200;
 
   function scrollToTop() {
     window.scrollTo({
@@ -14,24 +15,30 @@ export function ScrollToTopButton() {
   }
 
   useEffect(() => {
-    const scrollOverListener = () => {
+    function scrollOverListener() {
       setVisible(false);
-      if (window.scrollY > visibilityEdge) setVisible(true);
+      if (window.scrollY > VISIBILITY_EDGE) {
+        setVisible(true)
+      };
     };
+
     window.addEventListener("scroll", scrollOverListener);
     return () => window.removeEventListener("scroll", scrollOverListener);
   }, []);
-  if (visible) {
-    return (
-      <Button
-        onClick={scrollToTop}
-        position="fixed"
-        bottom="16"
-        right="8"
-        variant="outline"
-      >
-        <AiOutlineArrowUp size={20} />
-      </Button>
-    );
+
+  if (!visible) {
+    return null;
   }
+
+  return (
+    <Button
+      onClick={scrollToTop}
+      position="fixed"
+      bottom="16"
+      right="8"
+      variant="outline"
+    >
+      <AiOutlineArrowUp size={20} />
+    </Button>
+  );
 }

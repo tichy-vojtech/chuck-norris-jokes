@@ -1,31 +1,26 @@
 import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import { INITIAL_SELECTED_JOKE_COUNT } from '../constants';
 import { getData } from "../api/getData";
-import { generateRandomJokes } from "../utils/generateRandomJokes";
 
-const INITIAL_STATE = {
-  data: [],
-  isLoading: false,
-  isError: false,
-};
-
-export function useJokes() {
-  const [jokes, setJokes] = useState(INITIAL_STATE);
-  const [randomJokes, setRandomJokes] = useState([]);
+export function useJokes(searchTerm, selectedJokeCount) {
+  const [jokes, setJokes] = useState([]);
+  const [randomizedJokes, setRandomizedJokes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedJokeCount, setSelectedJokeCount] = useState(INITIAL_SELECTED_JOKE_COUNT);
   const toast = useToast();
+  const [iteration, setIteration] = useState(0)
+  const increment = () => setIteration(iteration + 1);
 
   useEffect(() => {
+    const query = searchTerm.length < 3 ? 'chu' : searchTerm;
+
+    setIteration(0);
     setIsLoading(true);
     setError(null);
-    getData("search?query=chu")
+    getData(`search?query=${query}`)
       .then((data) => {
-        setJokes(data);
-        setRandomJokes(generateRandomJokes(data, selectedJokeCount));
+        setJokes(data.result);
       })
       .catch((err) => {
         setError(err.message);
@@ -40,17 +35,22 @@ export function useJokes() {
         setIsLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (jokes.length > 0) {
+      const startIndex = (iteration * selectedJokeCount) % jokes.length;
+      const endIndex = ((iteration + 1) * selectedJokeCount) % jokes.length;
+      const finalEndIndex = endIndex < startIndex ? jokes.length : endIndex;
+
+      setRandomizedJokes(jokes.slice(startIndex, finalEndIndex));
+    }
+  }, [iteration, selectedJokeCount, jokes]);
 
   return {
-    jokes,
-    randomJokes,
+    jokes: randomizedJokes,
     isLoading,
     error,
-    selectedJokeCount,
-    setIsLoading,
-    setError,
-    setRandomJokes,
-    setSelectedJokeCount,
+    randomize: increment,
   };
 }
