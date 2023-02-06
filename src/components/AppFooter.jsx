@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Divider, Text } from "@chakra-ui/react";
+import { Box, Divider } from "@chakra-ui/react";
 
 export function AppFooter() {
   return (
@@ -12,9 +12,7 @@ export function AppFooter() {
     >
       <Divider />
       <Box as="footer" p={4}>
-        <Text as="p">
-          &copy; {new Date().getFullYear()} &middot; DVD Company a.s.
-        </Text>
+        &copy; {new Date().getFullYear()} &middot; DVD Company a.s.
       </Box>
     </Box>
   );

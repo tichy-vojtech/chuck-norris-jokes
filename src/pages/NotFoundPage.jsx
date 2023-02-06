@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Center, Heading, VStack, Button } from "@chakra-ui/react";
 
-function NotFoundPage() {
+export function NotFoundPage() {
   const navigate = useNavigate();
-
+  
   return (
     <Center h="calc(100vh - 200px)">
       <VStack>
@@ -12,14 +12,11 @@ function NotFoundPage() {
         <Heading as="h2" size="md">
           Toto není stránka, kterou hledáš.
         </Heading>
-        <div className="mt-4">
-          <Button onClick={() => navigate("/")}>
-            Přejít na domovskou stránku
-          </Button>
-        </div>
+        <Button onClick={() => navigate("/")} mt={4}>
+          Přejít na domovskou stránku!
+        </Button>
       </VStack>
     </Center>
   );
 }
 
-export default NotFoundPage;
