@@ -6,7 +6,7 @@ export function JokesListing({ filterJokes }) {
 
   function getRandomCardImage() {
     const randomImageIndex = Math.floor(Math.random() * NUMBER_OF_IMAGES) + 1;
-    return `/ChuckNorrisImage/chuck${randomImageIndex}.jpeg`;
+    return `/images/chuck${randomImageIndex}.jpeg`;
   }
 
   return (
@@ -21,7 +21,7 @@ export function JokesListing({ filterJokes }) {
           />
         ))
       ) : (
-        <Heading>Ups.. Nothing was found </Heading>
+        <Heading>Nothing was found.</Heading>
       )}
     </Box>
   );

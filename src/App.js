@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
-import { AppLayout } from "./components/AppLayout";
-import { JokesPage } from "./pages/JokesPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import CategoryJokesPage from "./pages/CategoryJokesPage";
+import { ChakraProvider } from "@chakra-ui/react";
 
-function App() {
+import { JokesPage } from "./pages/JokesPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { CategoryJokesPage } from "./pages/CategoryJokesPage";
+import { AppLayout } from "./components/AppLayout";
+import { cnJokesTheme } from "./theme";
+
+export function App() {
   return (
-    <div className="App">
+    <ChakraProvider theme={cnJokesTheme}>
       <BrowserRouter>
         <AppLayout>
           <Routes>
@@ -21,8 +23,6 @@ function App() {
           </Routes>
         </AppLayout>
       </BrowserRouter>
-    </div>
+    </ChakraProvider>
   );
 }
-
-export default App;

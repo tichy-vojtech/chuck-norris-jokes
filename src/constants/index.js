@@ -1,0 +1,1 @@
+export const INITIAL_SELECTED_JOKE_COUNT = 25;

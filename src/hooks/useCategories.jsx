@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import { getData } from "../api/getData";
 import { generateCategoryJokes } from "../utils/generateCategoryJokes";
 
+const INITIAL_STATE = {
+  data: [],
+  isLoading: false,
+  isError: false,
+};
+
 export function useCategories() {
-  const INITIAL_STATE = {
-    data: [],
-    isLoading: false,
-    isError: false,
-  };
   const { category } = useParams();
   const [jokes, setJokes] = useState(INITIAL_STATE);
   const [categoryJokes, setCategoryJokes] = useState([]);
