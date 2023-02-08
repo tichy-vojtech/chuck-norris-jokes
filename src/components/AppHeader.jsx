@@ -6,8 +6,8 @@ import {
   useColorMode,
   Heading,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
 
 import { CategoryMenu } from "./CategoryMenu";
 
@@ -17,7 +17,8 @@ export function AppHeader() {
   return (
     <Box bg={useColorModeValue("blue.100", "blue.900")} px={4}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Link to="/">
+        <Link href="/">
+          {" "}
           <Heading p={2} py={4}>
             DVD Jokes
           </Heading>
