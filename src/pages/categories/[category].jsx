@@ -9,7 +9,7 @@ import { ScrollToTopButton } from "../../components/ScrollToTopButton";
 import { NumberSlider } from "../../components/NumberSlider";
 import { useCategories } from "../../hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
-import { INITIAL_SELECTED_JOKE_COUNT } from "../../constants";
+import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
 
 export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
