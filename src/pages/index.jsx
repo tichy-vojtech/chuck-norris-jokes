@@ -7,7 +7,7 @@ import { SearchInput } from "../components/SearchInput";
 import { NumberSlider } from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { JokesListing } from "../components/JokesListing";
-import { useJokes } from "../hooks/useJokes";
+import { useJokes } from "../utils/hooks/useJokes";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../utils/constants";
 
 export default function JokesPage() {

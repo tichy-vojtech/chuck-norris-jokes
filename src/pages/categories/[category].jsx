@@ -7,7 +7,7 @@ import { Loader } from "../../components/Loader";
 import { Error } from "../../components/Error";
 import { ScrollToTopButton } from "../../components/ScrollToTopButton";
 import { NumberSlider } from "../../components/NumberSlider";
-import { useCategories } from "../../hooks/useCategories";
+import { useCategories } from "../../utils/hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
 

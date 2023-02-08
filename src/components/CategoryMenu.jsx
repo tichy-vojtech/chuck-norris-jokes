@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-import { getData } from "../api/getData";
+import { getData } from "../utils/api/getData";
 
 export function CategoryMenu() {
   const [categories, setCategories] = useState([]);
