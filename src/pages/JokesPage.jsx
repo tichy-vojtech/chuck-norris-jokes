@@ -24,14 +24,6 @@ export function JokesPage() {
     searchTerm,
     selectedJokeCount
   );
-  const allJokes =
-    searchTerm === ""
-      ? jokes.slice(0, selectedJokeCount)
-      : jokes
-          .filter(({ value }) =>
-            value.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-          .slice(0, selectedJokeCount);
 
   return (
     <Box px={5}>
@@ -49,7 +41,7 @@ export function JokesPage() {
         </Button>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
-        {!isLoading && !error && <JokesListing filterJokes={allJokes} />}
+        {!isLoading && !error && <JokesListing filterJokes={jokes} />}
       </VStack>
       <ScrollToTopButton />
     </Box>

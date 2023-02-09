@@ -11,11 +11,9 @@ export function useJokes(searchTerm, selectedJokeCount) {
   const toast = useToast();
   const [iteration, setIteration] = useState(0);
   const increment = () => setIteration(iteration + 1);
-  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
     const query = searchTerm.length < 3 ? "chu" : searchTerm;
-    setIteration(0);
     setIsLoading(true);
     setError(null);
     getData(`search?query=${query}`)
@@ -38,17 +36,16 @@ export function useJokes(searchTerm, selectedJokeCount) {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (jokes.length > 0) {
-      setStartIndex(startIndex + selectedJokeCount + 1);
-      setRandomizedJokes(
-        jokes.slice(startIndex, startIndex + selectedJokeCount)
-      );
-      console.log("startIndexx", startIndex);
-      console.log("endIndex", startIndex + selectedJokeCount);
-
-    }
+    setRandomizedJokes(
+      jokes.sort(() => Math.random() - 0.5).slice(0, selectedJokeCount)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iteration, jokes]);
 
+  useEffect(() => {
+    setRandomizedJokes(jokes.slice(0, selectedJokeCount));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedJokeCount]);
   return {
     jokes: randomizedJokes,
     isLoading,
