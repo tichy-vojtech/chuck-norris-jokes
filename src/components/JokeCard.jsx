@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Card,
   CardBody,
@@ -13,8 +13,16 @@ import {
 
 const MAX_CARD_WIDTH = 200;
 
-export function JokeCard({ joke, category, randomImage }) {
+export function JokeCard({ joke, category }) {
   const [showMore, setShowMore] = useState(false);
+  const [randomImage, setRandomImage] = useState(null);
+  const NUMBER_OF_IMAGES = 10;
+
+  useMemo(() => {
+    //useMemo
+    const randomImageIndex = Math.floor(Math.random() * NUMBER_OF_IMAGES) + 1;
+    setRandomImage(`/images/chuck${randomImageIndex}.jpeg`);
+  }, [joke]);
 
   return (
     <Card maxW="sm" borderRadius="lg" width="100%">
