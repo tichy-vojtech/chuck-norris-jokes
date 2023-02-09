@@ -45,6 +45,7 @@ export function useJokes(searchTerm, selectedJokeCount) {
       );
       console.log("startIndexx", startIndex);
       console.log("endIndex", startIndex + selectedJokeCount);
+
     }
   }, [iteration, jokes]);
 
