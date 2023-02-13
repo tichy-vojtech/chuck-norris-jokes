@@ -8,10 +8,10 @@ import {
   MenuDivider,
   Heading,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom";
 
-import { getData } from "../api/getData";
+import { getData } from "../utils/api/getData";
 
 export function CategoryMenu() {
   const [categories, setCategories] = useState([]);
@@ -29,7 +29,13 @@ export function CategoryMenu() {
         <Heading size="md">Categories</Heading>
         <MenuDivider />
         {categories.map((category) => (
-          <Link to={`/category-jokes/${category}`} key={category}>
+          <Link
+            href={{
+              pathname: "/categories/[category]",
+              query: { category },
+            }}
+            key={category}
+          >
             <MenuItem>{category}</MenuItem>
           </Link>
         ))}

@@ -1,5 +1,5 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
@@ -7,23 +7,34 @@ import { SearchInput } from "../components/SearchInput";
 import { NumberSlider } from "../components/NumberSlider";
 import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { JokesListing } from "../components/JokesListing";
-import { useJokes } from "../hooks/useJokes";
-import { INITIAL_SELECTED_JOKE_COUNT } from "../constants";
+import { useJokes } from "../utils/hooks/useJokes";
+import { INITIAL_SELECTED_JOKE_COUNT } from "../utils/constants";
+import { getData } from "../utils/api/getData";
 
-export function JokesPage() {
+export async function getServerSideProps() {
+  const initFetchedJokes = await getData(`search?query=chu`);
+  const fetchedJokes = initFetchedJokes.result;
+
+  return {
+    props: {
+      fetchedJokes,
+    },
+  };
+}
+
+export default function JokesPage({ fetchedJokes }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
 
+  const { isLoading, error, jokes, randomize, setJokes, searchQuery } =
+    useJokes(searchTerm, selectedJokeCount, fetchedJokes);
+
   function handleSearchInputChange(value) {
     value.length > 2 ? setSearchTerm(value) : setSearchTerm("");
+    searchQuery();
   }
-
-  const { isLoading, error, jokes, randomize } = useJokes(
-    searchTerm,
-    selectedJokeCount
-  );
 
   return (
     <Box px={5}>

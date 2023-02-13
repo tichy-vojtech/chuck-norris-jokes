@@ -22,7 +22,6 @@ export function JokeCard({ joke, category }) {
     return `/images/chuck${randomImageIndex}.jpeg`;
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const randomImage = useMemo(() => calculateRandomIndex(), [joke]);
 
   return (

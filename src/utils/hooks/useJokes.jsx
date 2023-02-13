@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 import { getData } from "../api/getData";
 
-export function useJokes(searchTerm, selectedJokeCount) {
-  const [jokes, setJokes] = useState([]);
+export function useJokes(searchTerm, selectedJokeCount, fetchedJokes) {
+  const [jokes, setJokes] = useState(fetchedJokes);
   const [randomizedJokes, setRandomizedJokes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ export function useJokes(searchTerm, selectedJokeCount) {
   const [iteration, setIteration] = useState(0);
   const increment = () => setIteration(iteration + 1);
 
-  useEffect(() => {
+  function searchQuery() {
     const query = searchTerm.length < 3 ? "chu" : searchTerm;
     setIsLoading(true);
     setError(null);
@@ -32,8 +32,7 @@ export function useJokes(searchTerm, selectedJokeCount) {
       .finally(() => {
         setIsLoading(false);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
+  }
 
   useEffect(() => {
     setRandomizedJokes(
@@ -51,5 +50,6 @@ export function useJokes(searchTerm, selectedJokeCount) {
     isLoading,
     error,
     randomize: increment,
+    searchQuery,
   };
 }
