@@ -1,5 +1,5 @@
 import { VStack, Box, Tag } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { SearchInput } from "../../components/SearchInput";
@@ -7,27 +7,43 @@ import { Loader } from "../../components/Loader";
 import { Error } from "../../components/Error";
 import { ScrollToTopButton } from "../../components/ScrollToTopButton";
 import { NumberSlider } from "../../components/NumberSlider";
-import { useCategories } from "../../utils/hooks/useCategories";
+import {
+  generateCategoryJokes,
+  useCategories,
+} from "../../utils/hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
+import { getData } from "../../utils/api/getData";
+import { AppLayout } from "../../components/AppLayout";
 
-export type CategoryJokesPageProps = {
-  value: string;
-};
-export default function CategoryJokesPage() {
+export async function getServerSideProps() {
+  const initFetchedJokes = await getData(`search?query=chu`);
+  const fetchedJokes = initFetchedJokes.result;
+
+  return {
+    props: {
+      fetchedJokes,
+    },
+  };
+}
+
+export default function CategoryJokesPage({ fetchedJokes }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
   const router = useRouter();
   const { category } = router.query;
-  const { categoryJokes, isLoading, error } = useCategories(category as string);
+  const { categoryJokes, isLoading, error } = useCategories(
+    category,
+    fetchedJokes
+  );
 
   const filteredJokes =
     searchTerm === ""
       ? categoryJokes.slice(0, selectedJokeCount)
       : categoryJokes
-          .filter(({ value }: CategoryJokesPageProps) =>
+          .filter(({ value }) =>
             value.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .slice(0, selectedJokeCount);

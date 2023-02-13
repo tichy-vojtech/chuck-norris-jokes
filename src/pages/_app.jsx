@@ -4,12 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { AppLayout } from "../components/AppLayout";
 import { cnJokesTheme } from "../theme";
 
-export type MyAppProps = {
-  Component: React.ComponentType;
-  pageProps: any;
-};
-
-export default function MyApp({ Component, pageProps }: MyAppProps) {
+export default function MyApp({ Component, pageProps }) {
   return (
     <>
       <ChakraProvider theme={cnJokesTheme}>

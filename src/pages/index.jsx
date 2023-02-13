@@ -1,5 +1,5 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
@@ -9,32 +9,32 @@ import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { JokesListing } from "../components/JokesListing";
 import { useJokes } from "../utils/hooks/useJokes";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../utils/constants";
+import { getData } from "../utils/api/getData";
 
-export type JokesPageProps = {
-  value: string;
-};
-export default function JokesPage() {
+export async function getServerSideProps() {
+  const initFetchedJokes = await getData(`search?query=chu`);
+  const fetchedJokes = initFetchedJokes.result;
+
+  return {
+    props: {
+      fetchedJokes,
+    },
+  };
+}
+
+export default function JokesPage({ fetchedJokes }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
 
-  function handleSearchInputChange(value: string) {
-    value.length > 2 ? setSearchTerm(value) : setSearchTerm("");
-  }
+  const { isLoading, error, jokes, randomize, setJokes, searchQuery } =
+    useJokes(searchTerm, selectedJokeCount, fetchedJokes);
 
-  const { isLoading, error, jokes, randomize } = useJokes(
-    searchTerm,
-    selectedJokeCount
-  );
-  const allJokes =
-    searchTerm === ""
-      ? jokes.slice(0, selectedJokeCount)
-      : jokes
-          .filter(({ value }: JokesPageProps) =>
-            value.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-          .slice(0, selectedJokeCount);
+  function handleSearchInputChange(value) {
+    value.length > 2 ? setSearchTerm(value) : setSearchTerm("");
+    searchQuery();
+  }
 
   return (
     <Box px={5}>
@@ -52,7 +52,7 @@ export default function JokesPage() {
         </Button>
         {isLoading && <Loader />}
         {error && <Error message={error} />}
-        {!isLoading && !error && <JokesListing filterJokes={allJokes} />}
+        {!isLoading && !error && <JokesListing filterJokes={jokes} />}
       </VStack>
       <ScrollToTopButton />
     </Box>

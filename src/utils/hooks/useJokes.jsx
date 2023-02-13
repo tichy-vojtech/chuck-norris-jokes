@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 import { getData } from "../api/getData";
 
-export function useJokes(searchTerm: string, selectedJokeCount: number) {
-  const [jokes, setJokes] = useState([]);
+export function useJokes(searchTerm, selectedJokeCount, fetchedJokes) {
+  const [jokes, setJokes] = useState(fetchedJokes);
   const [randomizedJokes, setRandomizedJokes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,10 +12,8 @@ export function useJokes(searchTerm: string, selectedJokeCount: number) {
   const [iteration, setIteration] = useState(0);
   const increment = () => setIteration(iteration + 1);
 
-  useEffect(() => {
+  function searchQuery() {
     const query = searchTerm.length < 3 ? "chu" : searchTerm;
-
-    setIteration(0);
     setIsLoading(true);
     setError(null);
     getData(`search?query=${query}`)
@@ -34,24 +32,24 @@ export function useJokes(searchTerm: string, selectedJokeCount: number) {
       .finally(() => {
         setIsLoading(false);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm]);
+  }
 
   useEffect(() => {
-    if (jokes.length > 0) {
-      const startIndex = (iteration * selectedJokeCount) % jokes.length;
-      //const endIndex = ((iteration + 1) * selectedJokeCount) % jokes.length;
-      //const finalEndIndex = endIndex < startIndex ? jokes.length : endIndex;
-      setRandomizedJokes(
-        jokes.slice(startIndex, startIndex + selectedJokeCount)
-      );
-    }
-  }, [iteration, selectedJokeCount, jokes]);
+    setRandomizedJokes(
+      jokes.sort(() => Math.random() - 0.5).slice(0, selectedJokeCount)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [iteration, jokes]);
 
+  useEffect(() => {
+    setRandomizedJokes(jokes.slice(0, selectedJokeCount));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedJokeCount]);
   return {
     jokes: randomizedJokes,
     isLoading,
     error,
     randomize: increment,
+    searchQuery,
   };
 }
