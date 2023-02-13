@@ -8,12 +8,16 @@ import {
 import { useState } from "react";
 
 const DEFAULT_MAX_SLIDER_VALUE = 50;
-
-export function NumberSlider({ 
+export type NumberSliderProps = {
+  initialValue: number;
+  maxSliderValue?: number;
+  onChangeEnd: (value: number) => void;
+};
+export function NumberSlider({
   initialValue,
   onChangeEnd,
-  maxSliderValue = DEFAULT_MAX_SLIDER_VALUE
-}) {
+  maxSliderValue = DEFAULT_MAX_SLIDER_VALUE,
+}: NumberSliderProps) {
   const [currentValue, setCurrentValue] = useState(initialValue);
 
   return (

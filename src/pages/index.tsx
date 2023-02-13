@@ -10,13 +10,16 @@ import { JokesListing } from "../components/JokesListing";
 import { useJokes } from "../utils/hooks/useJokes";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../utils/constants";
 
+export type JokesPageProps = {
+  value: string;
+};
 export default function JokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
 
-  function handleSearchInputChange(value) {
+  function handleSearchInputChange(value: string) {
     value.length > 2 ? setSearchTerm(value) : setSearchTerm("");
   }
 
@@ -28,7 +31,7 @@ export default function JokesPage() {
     searchTerm === ""
       ? jokes.slice(0, selectedJokeCount)
       : jokes
-          .filter(({ value }) =>
+          .filter(({ value }: JokesPageProps) =>
             value.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .slice(0, selectedJokeCount);

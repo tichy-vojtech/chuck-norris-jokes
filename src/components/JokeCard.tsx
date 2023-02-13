@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Card,
   CardBody,
@@ -12,9 +12,21 @@ import {
 } from "@chakra-ui/react";
 
 const MAX_CARD_WIDTH = 200;
+const NUMBER_OF_IMAGES = 10;
 
-export function JokeCard({ joke, category, randomImage }) {
+function calculateRandomIndex() {
+  const randomImageIndex = Math.floor(Math.random() * NUMBER_OF_IMAGES) + 1;
+  return `/images/chuck${randomImageIndex}.jpeg`;
+}
+
+export type JokeCardProps = {
+  joke: string;
+  categories: string[]; // TODO RENAME
+};
+
+export function JokeCard({ joke, categories }: JokeCardProps) {
   const [showMore, setShowMore] = useState(false);
+  const randomImage = useMemo(() => calculateRandomIndex(), [joke]);
 
   return (
     <Card maxW="sm" borderRadius="lg" width="100%">
@@ -58,11 +70,11 @@ export function JokeCard({ joke, category, randomImage }) {
           )}
         </Flex>
       </CardBody>
-      {category.length > 0 && (
+      {categories.length > 0 && (
         <CardFooter>
           <Flex justifyContent="space-between" width="100%">
             <Text textAlign="center">
-              Category: <b>{category}</b>
+              Category: <b>{categories}</b>
             </Text>
           </Flex>
         </CardFooter>

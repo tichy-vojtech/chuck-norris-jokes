@@ -3,13 +3,21 @@ import { useEffect, useState } from "react";
 
 import { getData } from "../api/getData";
 
-export function generateCategoryJokes(jokes, category) {
-  return jokes.result.filter(
-    (joke) => joke.categories.includes(category)
+export type GenerateCategoryJokesArgs = {
+  jokes: { result: [] };
+  category: string;
+};
+
+export function generateCategoryJokes({
+  jokes,
+  category,
+}: GenerateCategoryJokesArgs) {
+  return jokes.result.filter((joke: { categories: string[] }) =>
+    joke.categories.includes(category)
   );
 }
 
-export function useCategories(category) {
+export function useCategories(category: string) {
   const [categoryJokes, setCategoryJokes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,7 +28,9 @@ export function useCategories(category) {
     setError(null);
     getData("search?query=chu")
       .then((data) => {
-        setCategoryJokes(generateCategoryJokes(data, category));
+        setCategoryJokes(
+          generateCategoryJokes({ jokes: data, category: category })
+        );
       })
       .catch((err) => {
         setError(err.message);

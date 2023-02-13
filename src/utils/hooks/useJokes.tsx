@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { getData } from "../api/getData";
 
-export function useJokes(searchTerm, selectedJokeCount) {
+export function useJokes(searchTerm: string, selectedJokeCount: number) {
   const [jokes, setJokes] = useState([]);
   const [randomizedJokes, setRandomizedJokes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

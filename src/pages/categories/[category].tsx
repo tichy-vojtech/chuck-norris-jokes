@@ -11,6 +11,9 @@ import { useCategories } from "../../utils/hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
 
+export type CategoryJokesPageProps = {
+  value: string;
+};
 export default function CategoryJokesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
@@ -18,13 +21,13 @@ export default function CategoryJokesPage() {
   );
   const router = useRouter();
   const { category } = router.query;
-  const { categoryJokes, isLoading, error } = useCategories(category);
+  const { categoryJokes, isLoading, error } = useCategories(category as string);
 
   const filteredJokes =
     searchTerm === ""
       ? categoryJokes.slice(0, selectedJokeCount)
       : categoryJokes
-          .filter(({ value }) =>
+          .filter(({ value }: CategoryJokesPageProps) =>
             value.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .slice(0, selectedJokeCount);
