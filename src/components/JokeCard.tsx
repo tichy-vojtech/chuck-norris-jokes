@@ -21,7 +21,7 @@ function calculateRandomIndex() {
 
 export type JokeCardProps = {
   joke: string;
-  categories: string[]; // TODO RENAME
+  categories: string[];
 };
 
 export function JokeCard({ joke, categories }: JokeCardProps) {

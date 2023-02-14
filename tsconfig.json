@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/pages/categories/[category].jsx", "src/utils/hooks/useJokes.tsx"  ],
+, "src/pages/categories/[category].tsx", "src/utils/hooks/useJokes.tsx"  ],
   "exclude": [
     "node_modules"
   ]
