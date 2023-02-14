@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
-
 import { getData } from "../utils/api/getData";
 
 export function CategoryMenu() {

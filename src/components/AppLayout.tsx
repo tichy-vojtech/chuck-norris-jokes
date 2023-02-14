@@ -4,7 +4,10 @@ import { Box } from "@chakra-ui/react";
 import { AppHeader } from "./AppHeader";
 import { AppFooter } from "./AppFooter";
 
-export function AppLayout({ children }) {
+export type AppLayoutProps = {
+  children: React.ReactNode;
+}
+export function AppLayout({ children }: AppLayoutProps) {
   return (
     <Box textAlign="center">
       <AppHeader />

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Box, Divider } from "@chakra-ui/react";
 
 export function AppFooter() {

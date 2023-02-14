@@ -10,6 +10,7 @@ import { JokesListing } from "../components/JokesListing";
 import { useJokes } from "../utils/hooks/useJokes";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../utils/constants";
 import { getData } from "../utils/api/getData";
+import { Joke } from "../utils/types";
 
 export async function getServerSideProps() {
   const initFetchedJokes = await getData(`search?query=chu`);
@@ -21,19 +22,25 @@ export async function getServerSideProps() {
     },
   };
 }
+export type JokesPageProps = {
+  fetchedJokes: Joke[];
+};
 
-export default function JokesPage({ fetchedJokes }) {
+export default function JokesPage({ fetchedJokes }: JokesPageProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
 
-  const { isLoading, error, jokes, randomize, setJokes, searchQuery } =
-    useJokes(searchTerm, selectedJokeCount, fetchedJokes);
+  const { isLoading, error, jokes, randomize, searchQuery } = useJokes(
+    selectedJokeCount,
+    fetchedJokes
+  );
 
-  function handleSearchInputChange(value) {
-    value.length > 2 ? setSearchTerm(value) : setSearchTerm("");
-    searchQuery();
+  function handleSearchInputChange(value: string) {
+    const term = value.length > 2 ? value : "chu";
+    setSearchTerm(term);
+    searchQuery(term);
   }
 
   return (

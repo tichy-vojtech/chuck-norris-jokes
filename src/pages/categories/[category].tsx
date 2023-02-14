@@ -7,14 +7,12 @@ import { Loader } from "../../components/Loader";
 import { Error } from "../../components/Error";
 import { ScrollToTopButton } from "../../components/ScrollToTopButton";
 import { NumberSlider } from "../../components/NumberSlider";
-import {
-  generateCategoryJokes,
-  useCategories,
-} from "../../utils/hooks/useCategories";
+import { useCategories } from "../../utils/hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
 import { getData } from "../../utils/api/getData";
 import { AppLayout } from "../../components/AppLayout";
+import { Joke } from "../../utils/types";
 
 export async function getServerSideProps() {
   const initFetchedJokes = await getData(`search?query=chu`);
@@ -26,8 +24,14 @@ export async function getServerSideProps() {
     },
   };
 }
+export type CategoryJokesPageProps = {
+  fetchedJokes: Joke[];
+  category: any;
+};
 
-export default function CategoryJokesPage({ fetchedJokes }) {
+export default function CategoryJokesPage({
+  fetchedJokes,
+}: CategoryJokesPageProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
@@ -35,10 +39,9 @@ export default function CategoryJokesPage({ fetchedJokes }) {
   const router = useRouter();
   const { category } = router.query;
   const { categoryJokes, isLoading, error } = useCategories(
-    category,
+    category as string,
     fetchedJokes
   );
-
   const filteredJokes =
     searchTerm === ""
       ? categoryJokes.slice(0, selectedJokeCount)

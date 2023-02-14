@@ -12,16 +12,20 @@ import {
 } from "@chakra-ui/react";
 
 const MAX_CARD_WIDTH = 200;
+const NUMBER_OF_IMAGES = 10;
 
-export function JokeCard({ joke, category }) {
+function calculateRandomIndex() {
+  const randomImageIndex = Math.floor(Math.random() * NUMBER_OF_IMAGES) + 1;
+  return `/images/chuck${randomImageIndex}.jpeg`;
+}
+
+export type JokeCardProps = {
+  joke: string;
+  categories: string[];
+};
+
+export function JokeCard({ joke, categories }: JokeCardProps) {
   const [showMore, setShowMore] = useState(false);
-  const NUMBER_OF_IMAGES = 10;
-
-  function calculateRandomIndex() {
-    const randomImageIndex = Math.floor(Math.random() * NUMBER_OF_IMAGES) + 1;
-    return `/images/chuck${randomImageIndex}.jpeg`;
-  }
-
   const randomImage = useMemo(() => calculateRandomIndex(), [joke]);
 
   return (
@@ -66,11 +70,11 @@ export function JokeCard({ joke, category }) {
           )}
         </Flex>
       </CardBody>
-      {category.length > 0 && (
+      {categories.length > 0 && (
         <CardFooter>
           <Flex justifyContent="space-between" width="100%">
             <Text textAlign="center">
-              Category: <b>{category}</b>
+              Category: <b>{categories}</b>
             </Text>
           </Flex>
         </CardFooter>
