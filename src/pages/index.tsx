@@ -1,5 +1,6 @@
 import { VStack, Button, Box } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import debounce from "lodash.debounce";
 
 import { Loader } from "../components/Loader";
 import { Error } from "../components/Error";
@@ -40,7 +41,10 @@ export default function JokesPage({ fetchedJokes }: JokesPageProps) {
   function handleSearchInputChange(value: string) {
     const term = value.length > 2 ? value : "chu";
     setSearchTerm(term);
-    searchQuery(term);
+    const debouncedFilter = debounce(() => {
+      searchQuery(term);
+    }, 1000);
+    debouncedFilter();
   }
 
   return (

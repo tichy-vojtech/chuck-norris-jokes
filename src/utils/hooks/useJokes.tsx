@@ -12,7 +12,6 @@ export function useJokes(selectedJokeCount: number, fetchedJokes: Joke[]) {
   const toast = useToast();
   const [iteration, setIteration] = useState(0);
   const increment = () => setIteration(iteration + 1);
-
   function searchQuery(term: string) {
     const query = term.length < 3 ? "chu" : term;
     setIsLoading(true);
@@ -25,7 +24,6 @@ export function useJokes(selectedJokeCount: number, fetchedJokes: Joke[]) {
       })
       .catch((err) => {
         setError(err.message);
-        console.log("kurwa");
         toast({
           description: "Something went wrong",
           status: "error",

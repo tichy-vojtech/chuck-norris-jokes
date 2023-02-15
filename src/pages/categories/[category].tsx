@@ -11,7 +11,6 @@ import { useCategories } from "../../utils/hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
 import { getData } from "../../utils/api/getData";
-import { AppLayout } from "../../components/AppLayout";
 import { Joke } from "../../utils/types";
 
 export async function getServerSideProps() {
@@ -26,7 +25,6 @@ export async function getServerSideProps() {
 }
 export type CategoryJokesPageProps = {
   fetchedJokes: Joke[];
-  category: any;
 };
 
 export default function CategoryJokesPage({

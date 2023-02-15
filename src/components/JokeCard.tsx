@@ -31,7 +31,7 @@ export function JokeCard({ joke, categories }: JokeCardProps) {
   return (
     <Card maxW="sm" borderRadius="lg" width="100%">
       <CardBody>
-        <Flex flexDirection={["column", "row"]} alignItems="center">
+        <Flex flexDirection={["column", "row"]} alignItems="top">
           <Image
             mr={["0", "2"]}
             src={randomImage}
