@@ -23,12 +23,12 @@ export async function getServerSideProps() {
     },
   };
 }
+
 export type JokesPageProps = {
   fetchedJokes: Joke[];
 };
 
 export default function JokesPage({ fetchedJokes }: JokesPageProps) {
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
@@ -40,7 +40,6 @@ export default function JokesPage({ fetchedJokes }: JokesPageProps) {
 
   const handleSearchInputChangeDebounced = debounce((value: string) => {
     const term = value.length > 2 ? value : "chu";
-    setSearchTerm(term);
     searchQuery(term);
   }, 500);
 

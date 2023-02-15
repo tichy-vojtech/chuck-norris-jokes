@@ -18,9 +18,7 @@ export function useJokes(selectedJokeCount: number, fetchedJokes: Joke[]) {
     setError(null);
     getData(`search?query=${query}`)
       .then((data) => {
-        console.log(query);
         setJokes(data.result);
-        console.log(data.result);
       })
       .catch((err) => {
         setError(err.message);

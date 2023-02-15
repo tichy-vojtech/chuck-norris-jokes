@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 
 const DEFAULT_MAX_SLIDER_VALUE = 50;
+
 export type NumberSliderProps = {
   initialValue: number;
   maxSliderValue?: number;

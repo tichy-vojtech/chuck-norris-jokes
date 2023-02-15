@@ -1,5 +1,5 @@
 import { VStack, Box, Tag } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 import { SearchInput } from "../../components/SearchInput";
@@ -23,6 +23,7 @@ export async function getServerSideProps() {
     },
   };
 }
+
 export type CategoryJokesPageProps = {
   fetchedJokes: Joke[];
 };
