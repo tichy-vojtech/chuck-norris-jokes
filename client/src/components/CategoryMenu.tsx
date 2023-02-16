@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Category } from "../utils/types";
+
 import {
   Button,
   Menu,

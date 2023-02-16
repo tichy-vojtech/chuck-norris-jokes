@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 type Joke = {
@@ -15,7 +14,6 @@ export function useCategories(category: string, fetchedJokes: Joke[]) {
   const [categoryJokes, setCategoryJokes] = useState<Joke[]>([]);
   const [isLoading] = useState(false);
   const [error] = useState(null);
-  const toast = useToast();
 
   useEffect(() => {
     setCategoryJokes(generateCategoryJokes(jokes, category));
