@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Category } from "../utils/types";
 import {
   Button,
   Menu,
@@ -10,15 +11,19 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
-
-import { getData } from "../utils/api/getData";
+import { getCategories } from "../utils/api/getCategories";
 
 export function CategoryMenu() {
   const [categories, setCategories] = useState([]);
+  console.log(categories);
 
-  useEffect(function fetchCategories() {
-    getData("categories").then((category) => setCategories(category));
+  useEffect(() => {
+    getCategories().then((cats) => {
+      setCategories(cats);
+    });
   }, []);
+
+  console.log("this is categories state", categories);
 
   return (
     <Menu>

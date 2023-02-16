@@ -14,8 +14,8 @@ import { getData } from "../utils/api/getData";
 import { Joke } from "../utils/types";
 
 export async function getServerSideProps() {
-  const initFetchedJokes = await getData(`search?query=chu`);
-  const fetchedJokes = initFetchedJokes.result;
+  const initFetchedJokes = await getData();
+  const fetchedJokes = initFetchedJokes;
 
   return {
     props: {
