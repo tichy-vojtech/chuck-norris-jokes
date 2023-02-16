@@ -4,7 +4,7 @@ import client from "./apollo-client";
 export async function getData() {
   const { data } = await client.query({
     query: gql`
-      query allJokes {
+      query AllJokes {
         allJokes {
           result {
             id

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { Joke } from "../types";
 
 export function useJokes(selectedJokeCount: number, fetchedJokes: Joke[]) {

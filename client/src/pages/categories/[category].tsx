@@ -10,7 +10,7 @@ import { NumberSlider } from "../../components/NumberSlider";
 import { useCategories } from "../../utils/hooks/useCategories";
 import { JokesListing } from "../../components/JokesListing";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../../utils/constants";
-import { getData } from "../../utils/api/getData";
+import { getData } from "../../api/getData";
 import { Joke } from "../../utils/types";
 
 export async function getServerSideProps() {

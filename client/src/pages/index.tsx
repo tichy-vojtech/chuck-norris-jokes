@@ -10,7 +10,7 @@ import { ScrollToTopButton } from "../components/ScrollToTopButton";
 import { JokesListing } from "../components/JokesListing";
 import { useJokes } from "../utils/hooks/useJokes";
 import { INITIAL_SELECTED_JOKE_COUNT } from "../utils/constants";
-import { getData } from "../utils/api/getData";
+import { getData } from "../api/getData";
 import { Joke } from "../utils/types";
 
 export async function getServerSideProps() {
@@ -29,6 +29,7 @@ export type JokesPageProps = {
 };
 
 export default function JokesPage({ fetchedJokes }: JokesPageProps) {
+  const DEBOUNCE_DELAY = 500;
   const [selectedJokeCount, setSelectedJokeCount] = useState(
     INITIAL_SELECTED_JOKE_COUNT
   );
@@ -41,7 +42,7 @@ export default function JokesPage({ fetchedJokes }: JokesPageProps) {
   const handleSearchInputChangeDebounced = debounce((value: string) => {
     const term = value.length > 2 ? value : "chu";
     searchQuery(term);
-  }, 500);
+  }, DEBOUNCE_DELAY);
 
   function handleSearchInputChange(value: string) {
     handleSearchInputChangeDebounced(value);

@@ -11,19 +11,16 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { getCategories } from "../utils/api/getCategories";
+import { getCategories } from "../api/getCategories";
 
 export function CategoryMenu() {
   const [categories, setCategories] = useState([]);
-  console.log(categories);
 
   useEffect(() => {
-    getCategories().then((cats) => {
-      setCategories(cats);
+    getCategories().then((categories) => {
+      setCategories(categories);
     });
   }, []);
-
-  console.log("this is categories state", categories);
 
   return (
     <Menu>
