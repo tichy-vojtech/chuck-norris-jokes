@@ -11,7 +11,7 @@ export function AppFooter() {
     >
       <Divider />
       <Box as="footer" p={4}>
-        &copy; {new Date().getFullYear()} &middot; DVD Company a.s.
+        &copy; {new Date().getFullYear()} &middot; Chuck Norris Company a.s.
       </Box>
     </Box>
   );

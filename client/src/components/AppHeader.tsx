@@ -20,7 +20,7 @@ export function AppHeader() {
         <Link href="/">
           {" "}
           <Heading p={2} py={4}>
-            DVD Jokes
+            Chuck Norris Jokes
           </Heading>
         </Link>
         <Flex alignItems="center">

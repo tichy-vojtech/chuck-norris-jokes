@@ -44,16 +44,12 @@ export default function JokesPage({ fetchedJokes }: JokesPageProps) {
     searchQuery(term);
   }, DEBOUNCE_DELAY);
 
-  function handleSearchInputChange(value: string) {
-    handleSearchInputChangeDebounced(value);
-  }
-
   return (
     <Box px={5}>
       <VStack>
         <SearchInput
           placeholder="Search for jokes"
-          onChange={handleSearchInputChange}
+          onChange={handleSearchInputChangeDebounced}
         />
         <NumberSlider
           initialValue={selectedJokeCount}

@@ -21,7 +21,6 @@ export function CategoryMenu() {
       setCategories(categories);
     });
   }, []);
-  console.log(categories);
 
   return (
     <Menu>

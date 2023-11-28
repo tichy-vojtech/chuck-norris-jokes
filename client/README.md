@@ -1,4 +1,4 @@
-## CN Jokes by DVD
+## Chuck Norris Jokes
 
 - use Node version defined in `.nvmrc`
 
